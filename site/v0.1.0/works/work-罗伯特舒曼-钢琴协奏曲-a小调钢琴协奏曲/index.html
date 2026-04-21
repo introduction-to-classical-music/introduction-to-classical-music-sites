@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>古典导聆不全书 | a小调钢琴协奏曲</title><meta name="description" content="舒曼《a小调钢琴协奏曲》是德国作曲家罗伯特·舒曼于1845年完成的唯一一部钢琴协奏曲，作品编号Op.54，被列为“世界五大钢琴协奏曲”之一。该作品诞生于其与克拉拉·舒曼婚后创作高峰期，结合古典协奏曲结构与浪漫主义风格，全曲分为三个乐章，主题围绕斗争精神与理想追求展开。 该协奏曲创作始于1841年的单乐章《钢琴主奏a小调幻想曲》，投稿未果后于1845年补写第二、第三乐章，形成完整作品。第一乐章通过a小调与C大调主题对比展现戏剧性张力；第二乐章以弦乐与钢琴对话营造抒情氛围；第三乐章采用舞曲节奏收束全曲。舒曼在结构上突破传统协奏曲模式，强化钢琴与乐队的交融性，并使用乐章间不间断过渡增强整体性。"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/_astro/about.Zfhg6SaR.css"></head> <body> <header class="site-header"> <div class="container site-header__inner"> <div class="site-header__spacer" aria-hidden="true"></div> <nav class="site-nav" aria-label="主导航"> <a href="/">首页</a><a href="/composers/">作曲家</a><a href="/conductors/">指挥</a><a href="/search/">搜索</a><a href="/about/">关于</a> </nav> <div class="site-search-shell" data-site-search> <button class="site-search__toggle" type="button" aria-label="打开搜索" aria-expanded="false"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M10.5 4.5a6 6 0 1 0 0 12a6 6 0 0 0 0-12Zm0-1.5a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15Zm6.1 12.54l4.43 4.42l-1.06 1.06l-4.42-4.43z"></path> </svg> </button> <form action="/search/" class="site-search" role="search"> <label class="sr-only" for="global-search">搜索</label> <input id="global-search" name="q" type="search" placeholder="搜索作曲家、指挥、乐团、类型、作品"> </form> </div> </div> </header> <script>
+  const searchShell = document.querySelector("[data-site-search]");
+  const toggle = searchShell?.querySelector(".site-search__toggle");
+  const input = searchShell?.querySelector("input");
+
+  toggle?.addEventListener("click", () => {
+    const nextState = !searchShell.classList.contains("is-open");
+    searchShell.classList.toggle("is-open", nextState);
+    toggle.setAttribute("aria-expanded", nextState ? "true" : "false");
+    if (nextState && input instanceof HTMLInputElement) {
+      input.focus();
+    }
+  });
+
+  input?.addEventListener("blur", () => {
+    if (input instanceof HTMLInputElement && !input.value.trim()) {
+      searchShell?.classList.remove("is-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script> <main class="page-shell">  <div class="container page-section"> <section class="section-heading section-heading--centered"> <p class="section-heading__eyebrow">Work</p> <h1>a小调钢琴协奏曲</h1> <p class="page-note"> 罗伯特·舒曼  / 钢琴协奏曲 </p> <p class="page-lead">Piano Concerto, Op.54</p>  </section> <div class="expandable-summary composer-summary" data-expandable-summary style="--expandable-summary-lines:8;"><p class="expandable-summary__content body-copy" data-expandable-summary-content>舒曼《a小调钢琴协奏曲》是德国作曲家罗伯特·舒曼于1845年完成的唯一一部钢琴协奏曲，作品编号Op.54，被列为“世界五大钢琴协奏曲”之一。该作品诞生于其与克拉拉·舒曼婚后创作高峰期，结合古典协奏曲结构与浪漫主义风格，全曲分为三个乐章，主题围绕斗争精神与理想追求展开。 该协奏曲创作始于1841年的单乐章《钢琴主奏a小调幻想曲》，投稿未果后于1845年补写第二、第三乐章，形成完整作品。第一乐章通过a小调与C大调主题对比展现戏剧性张力；第二乐章以弦乐与钢琴对话营造抒情氛围；第三乐章采用舞曲节奏收束全曲。舒曼在结构上突破传统协奏曲模式，强化钢琴与乐队的交融性，并使用乐章间不间断过渡增强整体性。</p><div class="expandable-summary__tail" data-expandable-summary-tail><button type="button" class="expandable-summary__toggle expandable-summary__toggle--inline" data-expandable-summary-toggle data-expand-label="展开" data-collapse-label="折叠" aria-expanded="false">
+展开
+</button></div></div><script>
+  const expandableSummaries = document.querySelectorAll("[data-expandable-summary]");
+
+  expandableSummaries.forEach((container) => {
+    const content = container.querySelector("[data-expandable-summary-content]");
+    const toggle = container.querySelector("[data-expandable-summary-toggle]");
+    const tail = container.querySelector("[data-expandable-summary-tail]");
+
+    if (!content || !toggle || !tail) {
+      return;
+    }
+
+    const updateVisibility = () => {
+      const collapsed = !container.classList.contains("is-expanded");
+      const overflowing = content.scrollHeight > content.clientHeight + 2;
+      tail.hidden = !overflowing && collapsed;
+    };
+
+    toggle.addEventListener("click", () => {
+      const expanded = container.classList.toggle("is-expanded");
+      toggle.textContent = expanded ? toggle.dataset.collapseLabel || "折叠" : toggle.dataset.expandLabel || "展开";
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+      if (!expanded) {
+        requestAnimationFrame(updateVisibility);
+      }
+    });
+
+    requestAnimationFrame(updateVisibility);
+    window.addEventListener("resize", updateVisibility, { passive: true });
+  });
+</script>  <div class="section-divider"></div> <section> <div class="section-heading section-heading--centered section-heading--subsection"> <p class="section-heading__eyebrow">Recommended Recordings</p> <h2>推荐版本</h2> </div> <div class="work-recording-list"> <article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/recordings/recording-a小调钢琴协奏曲-劳拉-and-怀特1951/">怀特 - 劳拉 - 英国广播公司苏格兰交响乐团 - May 29, 1951</a></h3> <p class="page-note">Whyte - Lara - BBC Scottish Symphony Orchestra - May 29, 1951</p> <p class="page-note">May 29, 1951</p>  </div> <div class="work-recording__meta"> <span>主推荐</span> </div> </article><article class="work-recording"> <a class="work-recording__thumb-link" href="/recordings/recording-a小调钢琴协奏曲-吉泽金-and-富特文格勒1942/"> <img class="work-recording__thumb" src="/library-assets/legacy/pic/舒曼/钢协/a小调钢协/吉泽金&#38;富特文格勒.jpg" alt="富特文格勒 - 吉泽金 - 柏林爱乐乐团 - March 3, 1942 Berlin" loading="lazy"> </a> <div class="work-recording__body"> <h3><a href="/recordings/recording-a小调钢琴协奏曲-吉泽金-and-富特文格勒1942/">富特文格勒 - 吉泽金 - 柏林爱乐乐团 - March 3, 1942 Berlin</a></h3> <p class="page-note">Furtwängler - Gieseking - Berliner Philharmoniker - March 3, 1942 Berlin</p> <p class="page-note">March 3, 1942 Berlin</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <a class="work-recording__thumb-link" href="/recordings/recording-a小调钢琴协奏曲-安妮-and-佩里克1985/"> <img class="work-recording__thumb" src="/library-assets/legacy/pic/舒曼/钢协/a小调钢协/安妮&#38;佩里克.png" alt="佩里克 - 安妮 - 日本放送协会交响乐团 - October 18, 1985" loading="lazy"> </a> <div class="work-recording__body"> <h3><a href="/recordings/recording-a小调钢琴协奏曲-安妮-and-佩里克1985/">佩里克 - 安妮 - 日本放送协会交响乐团 - October 18, 1985</a></h3> <p class="page-note">Prick - Fischer - NHK Symphony Orchestra - October 18, 1985</p> <p class="page-note">October 18, 1985</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/recordings/recording-a小调钢琴协奏曲-安妮-and-克列茨基/">克列茨基 - 安妮 - 布达佩斯爱乐乐团</a></h3> <p class="page-note">Kletzki - Fischer - Budapest Philharmonic Orchestra</p>   </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/recordings/recording-a小调钢琴协奏曲-弗朗索瓦-and-克列茨基1958/">克列茨基 - 弗朗索瓦 - 法国国家管弦乐团 - June 25, 1958, Salle Wagram</a></h3> <p class="page-note">Kletzki - François - Orchestre National de France - June 25, 1958, Salle Wagram</p> <p class="page-note">June 25, 1958, Salle Wagram 路 Paris</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <a class="work-recording__thumb-link" href="/recordings/recording-a小调钢琴协奏曲-拉罗查-and-萨瓦利施1977/"> <img class="work-recording__thumb" src="/library-assets/legacy/pic/舒曼/钢协/a小调钢协/拉罗查&#38;萨瓦利施.png" alt="沃尔夫冈·萨瓦利施 - 拉罗查 - 瑞士罗曼德管弦乐团 - January 12, 1977 -Victoria Hall" loading="lazy"> </a> <div class="work-recording__body"> <h3><a href="/recordings/recording-a小调钢琴协奏曲-拉罗查-and-萨瓦利施1977/">沃尔夫冈·萨瓦利施 - 拉罗查 - 瑞士罗曼德管弦乐团 - January 12, 1977 -Victoria Hall</a></h3> <p class="page-note">Sawallisch - Larrocha - Orchestre de la Suisse Romande - January 12, 1977 -Victoria Hall</p> <p class="page-note">January 12, 1977 -Victoria Hall 路 Genève</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/recordings/recording-a小调钢琴协奏曲-格林伯格-and-埃利亚斯伯格1958/">埃利亚斯伯格 - 格林伯格 - 苏联国家交响乐团 - 1958</a></h3> <p class="page-note">Eliasberg - Grinberg - USSR State Symphony Orchestra - 1958</p> <p class="page-note">1958</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/recordings/recording-a小调钢琴协奏曲-福斯特-1953/">福斯特 - 1953*</a></h3> <p class="page-note">Foster - 1953*</p> <p class="page-note">1953*</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/recordings/recording-a小调钢琴协奏曲-科尔托-and-弗里乔伊1951/">费伦茨·弗里乔伊 - 科尔托 - 柏林爱乐乐团 - 1951</a></h3> <p class="page-note">Ferenc·Fricsay - Cortot - Berliner Philharmoniker - 1951</p> <p class="page-note">1951</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/recordings/recording-a小调钢琴协奏曲-维尔萨拉泽-and-鲁丁/">亚历山大·鲁丁 - 维尔萨拉泽 - 莫斯科音乐学院大音乐厅</a></h3> <p class="page-note">rudin - Virsaladze - 莫斯科音乐学院大音乐厅</p> <p class="page-note">莫斯科音乐学院大音乐厅</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/recordings/recording-a小调钢琴协奏曲-肯普夫-and-多拉蒂1959/">安塔尔·多拉蒂 - 肯普夫 - 阿姆斯特丹皇家音乐厅管弦乐团 - Amsterdam</a></h3> <p class="page-note">Dorati - Kempff - Royal Concertgebouw Orchestra - Amsterdam</p> <p class="page-note">Amsterdam</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <a class="work-recording__thumb-link" href="/recordings/recording-a小调钢琴协奏曲-莫伊塞维奇-and-阿克曼1954/"> <img class="work-recording__thumb" src="/library-assets/legacy/pic/舒曼/钢协/a小调钢协/莫伊塞维奇&#38;阿克曼.jpg" alt="奥托·阿克曼 - 莫伊塞维奇 - 爱乐乐团 - 1954" loading="lazy"> </a> <div class="work-recording__body"> <h3><a href="/recordings/recording-a小调钢琴协奏曲-莫伊塞维奇-and-阿克曼1954/">奥托·阿克曼 - 莫伊塞维奇 - 爱乐乐团 - 1954</a></h3> <p class="page-note">Ackermann - Moiseiwitsch - Philharmonia Orchestra - 1954</p> <p class="page-note">1954</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/recordings/recording-a小调钢琴协奏曲-里赫特-and-费伦奇克1954/">费伦奇克 - 里赫特 - 匈牙利国家爱乐乐团 - 布达佩斯音乐学院</a></h3> <p class="page-note">János - Richter - Hungarian National Philharmonic Orchestra - 布达佩斯音乐学院</p> <p class="page-note">布达佩斯音乐学院</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/recordings/recording-a小调钢琴协奏曲-阿劳-and-约胡姆1977/">约胡姆 - 阿劳 - 阿姆斯特丹皇家音乐厅管弦乐团 - April 21, 1977</a></h3> <p class="page-note">Jochum - Arrau - Royal Concertgebouw Orchestra - April 21, 1977</p> <p class="page-note">April 21, 1977</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/recordings/recording-a小调钢琴协奏曲-鲁普-and-朱里尼1980/">朱里尼 - 鲁普 - 洛杉矶爱乐乐团 - March 8, 1980</a></h3> <p class="page-note">Giulini - Lupu - Los Angeles Philharmonic - March 8, 1980</p> <p class="page-note">March 8, 1980</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article> </div> </section> </div>  </main> <footer class="site-footer"> <div class="container site-footer__inner"> <div> <strong>古典导聆不全书</strong> <p>本站仅提供导聆说明与外部资源链接，不存储录音录像文件；相关内容版权归原权利人所有。</p> </div> <div> <span>联系方式</span> <p>QQ 439183718(群) 247996796(管理员)</p> </div> </div> </footer> <script>
+      document.addEventListener("click", async (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-local-resource-link="true"]') : null;
+        if (!(trigger instanceof HTMLAnchorElement)) {
+          return;
+        }
+        event.preventDefault();
+        try {
+          const response = await fetch(trigger.href, {
+            method: "GET",
+            credentials: "same-origin",
+          });
+          if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || `Failed to open local resource (${response.status})`);
+          }
+        } catch (error) {
+          window.alert(error instanceof Error ? error.message : String(error));
+        }
+      });
+    </script> </body> </html>

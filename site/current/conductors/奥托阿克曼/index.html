@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>古典导聆不全书 | 奥托·阿克曼</title><meta name="description" content="奥托·阿克曼 的相关推荐版本索引。"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/_astro/about.Zfhg6SaR.css"></head> <body> <header class="site-header"> <div class="container site-header__inner"> <div class="site-header__spacer" aria-hidden="true"></div> <nav class="site-nav" aria-label="主导航"> <a href="/">首页</a><a href="/composers/">作曲家</a><a href="/conductors/">指挥</a><a href="/search/">搜索</a><a href="/about/">关于</a> </nav> <div class="site-search-shell" data-site-search> <button class="site-search__toggle" type="button" aria-label="打开搜索" aria-expanded="false"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M10.5 4.5a6 6 0 1 0 0 12a6 6 0 0 0 0-12Zm0-1.5a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15Zm6.1 12.54l4.43 4.42l-1.06 1.06l-4.42-4.43z"></path> </svg> </button> <form action="/search/" class="site-search" role="search"> <label class="sr-only" for="global-search">搜索</label> <input id="global-search" name="q" type="search" placeholder="搜索作曲家、指挥、乐团、类型、作品"> </form> </div> </div> </header> <script>
+  const searchShell = document.querySelector("[data-site-search]");
+  const toggle = searchShell?.querySelector(".site-search__toggle");
+  const input = searchShell?.querySelector("input");
+
+  toggle?.addEventListener("click", () => {
+    const nextState = !searchShell.classList.contains("is-open");
+    searchShell.classList.toggle("is-open", nextState);
+    toggle.setAttribute("aria-expanded", nextState ? "true" : "false");
+    if (nextState && input instanceof HTMLInputElement) {
+      input.focus();
+    }
+  });
+
+  input?.addEventListener("blur", () => {
+    if (input instanceof HTMLInputElement && !input.value.trim()) {
+      searchShell?.classList.remove("is-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script> <main class="page-shell">  <div class="container page-section"> <div class="section-heading"> <p class="section-heading__eyebrow">Conductor</p> <h1>奥托·阿克曼</h1> </div>  <p class="page-note">Otto Ackermann</p> <div class="expandable-summary" data-expandable-summary style="--expandable-summary-lines:8;"><p class="expandable-summary__content body-copy" data-expandable-summary-content>1909年生于布加勒斯特。他就读于布加勒斯特音乐学院和柏林音乐学院。 年仅 15 岁时，指挥罗马尼亚皇家歌剧院巡回演出，随后担任过许多重要的歌剧指挥职务，从 1928 年至 1932 年（18 至 23 岁）的杜塞尔多夫歌剧院开始。随后，在布尔诺（1932-1935 年）、伯尔尼（1935-1945 年）和维也纳，在欧洲各地进行了多次旅行和音乐会，并与维也纳爱乐乐团、荷兰爱乐乐团和苏黎世音乐厅管弦乐团合作录制了唱片。阿克曼是弗朗茨·莱哈尔的密友，并在哥伦比亚唱片公司录制了他的轻歌剧，尽管这些轻歌剧是与英国管弦乐团（爱乐乐团）合作制作的，但这些轻歌剧以其典型的维也纳轻快和乐句而著称。阿克曼与伊丽莎白·施瓦茨科普夫一起指挥了理查德·施特劳斯最后四首歌的早期录音。于 1960 年 3 月在伯尔尼的 Wabern bei Bern（伯尔尼）去世，享年 50 岁。</p><div class="expandable-summary__tail" data-expandable-summary-tail><button type="button" class="expandable-summary__toggle expandable-summary__toggle--inline" data-expandable-summary-toggle data-expand-label="展开" data-collapse-label="折叠" aria-expanded="false">
+展开
+</button></div></div><script>
+  const expandableSummaries = document.querySelectorAll("[data-expandable-summary]");
+
+  expandableSummaries.forEach((container) => {
+    const content = container.querySelector("[data-expandable-summary-content]");
+    const toggle = container.querySelector("[data-expandable-summary-toggle]");
+    const tail = container.querySelector("[data-expandable-summary-tail]");
+
+    if (!content || !toggle || !tail) {
+      return;
+    }
+
+    const updateVisibility = () => {
+      const collapsed = !container.classList.contains("is-expanded");
+      const overflowing = content.scrollHeight > content.clientHeight + 2;
+      tail.hidden = !overflowing && collapsed;
+    };
+
+    toggle.addEventListener("click", () => {
+      const expanded = container.classList.toggle("is-expanded");
+      toggle.textContent = expanded ? toggle.dataset.collapseLabel || "折叠" : toggle.dataset.expandLabel || "展开";
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+      if (!expanded) {
+        requestAnimationFrame(updateVisibility);
+      }
+    });
+
+    requestAnimationFrame(updateVisibility);
+    window.addEventListener("resize", updateVisibility, { passive: true });
+  });
+</script>  <div class="section-divider"></div> <div class="section-stack section-stack--tight"> <section class="group-listing"> <div class="group-listing__header"> <h2>罗伯特·舒曼</h2> </div> <article class="group-listing__work"> <h3><a href="/works/work-罗伯特舒曼-钢琴协奏曲-a小调钢琴协奏曲/">a小调钢琴协奏曲</a></h3> <ul class="linked-list"> <li><a href="/recordings/recording-a小调钢琴协奏曲-莫伊塞维奇-and-阿克曼1954/">奥托·阿克曼 - 莫伊塞维奇 - 爱乐乐团 - 1954</a></li> </ul> </article> </section> </div> </div>  </main> <footer class="site-footer"> <div class="container site-footer__inner"> <div> <strong>古典导聆不全书</strong> <p>本站仅提供导聆说明与外部资源链接，不存储录音录像文件；相关内容版权归原权利人所有。</p> </div> <div> <span>联系方式</span> <p>QQ 439183718(群) 247996796(管理员)</p> </div> </div> </footer> <script>
+      document.addEventListener("click", async (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-local-resource-link="true"]') : null;
+        if (!(trigger instanceof HTMLAnchorElement)) {
+          return;
+        }
+        event.preventDefault();
+        try {
+          const response = await fetch(trigger.href, {
+            method: "GET",
+            credentials: "same-origin",
+          });
+          if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || `Failed to open local resource (${response.status})`);
+          }
+        } catch (error) {
+          window.alert(error instanceof Error ? error.message : String(error));
+        }
+      });
+    </script> </body> </html>

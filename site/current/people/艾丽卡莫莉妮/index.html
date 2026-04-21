@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>古典导聆不全书 | 艾丽卡·莫莉妮</title><meta name="description" content="艾丽卡·莫莉妮 的相关版本与出现记录。"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/_astro/about.Zfhg6SaR.css"></head> <body> <header class="site-header"> <div class="container site-header__inner"> <div class="site-header__spacer" aria-hidden="true"></div> <nav class="site-nav" aria-label="主导航"> <a href="/">首页</a><a href="/composers/">作曲家</a><a href="/conductors/">指挥</a><a href="/search/">搜索</a><a href="/about/">关于</a> </nav> <div class="site-search-shell" data-site-search> <button class="site-search__toggle" type="button" aria-label="打开搜索" aria-expanded="false"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M10.5 4.5a6 6 0 1 0 0 12a6 6 0 0 0 0-12Zm0-1.5a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15Zm6.1 12.54l4.43 4.42l-1.06 1.06l-4.42-4.43z"></path> </svg> </button> <form action="/search/" class="site-search" role="search"> <label class="sr-only" for="global-search">搜索</label> <input id="global-search" name="q" type="search" placeholder="搜索作曲家、指挥、乐团、类型、作品"> </form> </div> </div> </header> <script>
+  const searchShell = document.querySelector("[data-site-search]");
+  const toggle = searchShell?.querySelector(".site-search__toggle");
+  const input = searchShell?.querySelector("input");
+
+  toggle?.addEventListener("click", () => {
+    const nextState = !searchShell.classList.contains("is-open");
+    searchShell.classList.toggle("is-open", nextState);
+    toggle.setAttribute("aria-expanded", nextState ? "true" : "false");
+    if (nextState && input instanceof HTMLInputElement) {
+      input.focus();
+    }
+  });
+
+  input?.addEventListener("blur", () => {
+    if (input instanceof HTMLInputElement && !input.value.trim()) {
+      searchShell?.classList.remove("is-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script> <main class="page-shell">  <div class="container page-section"> <div class="section-heading"> <p class="section-heading__eyebrow">Performer</p> <h1>艾丽卡·莫莉妮</h1> </div>  <p class="page-note">Erika Morini</p> <p class="page-note">角色：soloist</p> <div class="expandable-summary" data-expandable-summary style="--expandable-summary-lines:8;"><p class="expandable-summary__content body-copy" data-expandable-summary-content>艾丽卡·莫莉妮（德语：Erika Morini，1904年1月5日—1995年11月1日），是一位犹太裔奥地利小提琴家，20世纪最著名的女性演奏家之一，著名乐评哈罗德·勋伯格盛赞为“史上最佳的女性小提琴家”，但今日乐迷间的讨论度较低。艾丽卡·莫莉妮出生于奥地利维也纳，由父亲奥斯卡·莫里茨（Oscar Moritz，在维也纳经营音乐学校）启蒙音乐。学龄的莫莉妮获录取进入维也纳音乐与表演艺术大学，向奥塔卡·舍夫契克学习。1916年，她与尼基施·阿图尔以及柏林爱乐乐团合作，完成职业生涯的初登场。1921年1月26日，17岁的莫莉妮在纽约演出，造成美国听众的轰动。1923年，她初次造访伦敦。
+
+1938年，莫莉妮迁居至纽约，并固定在曼尼斯音乐学院从事教学。1962年，在一次纪念弗里茨·克莱斯勒的演出场合，莫莉妮与艾萨克·斯特恩、齐诺·弗朗切斯卡悌、内森·米尔斯坦等三人共演。之后，曾有十数年的时间，莫莉妮未曾公开演出，直到1976年，她在亨特学院举行了最后一次公开演出。据闻，此后莫莉妮便不再演奏小提琴。</p><div class="expandable-summary__tail" data-expandable-summary-tail><button type="button" class="expandable-summary__toggle expandable-summary__toggle--inline" data-expandable-summary-toggle data-expand-label="展开" data-collapse-label="折叠" aria-expanded="false">
+展开
+</button></div></div><script>
+  const expandableSummaries = document.querySelectorAll("[data-expandable-summary]");
+
+  expandableSummaries.forEach((container) => {
+    const content = container.querySelector("[data-expandable-summary-content]");
+    const toggle = container.querySelector("[data-expandable-summary-toggle]");
+    const tail = container.querySelector("[data-expandable-summary-tail]");
+
+    if (!content || !toggle || !tail) {
+      return;
+    }
+
+    const updateVisibility = () => {
+      const collapsed = !container.classList.contains("is-expanded");
+      const overflowing = content.scrollHeight > content.clientHeight + 2;
+      tail.hidden = !overflowing && collapsed;
+    };
+
+    toggle.addEventListener("click", () => {
+      const expanded = container.classList.toggle("is-expanded");
+      toggle.textContent = expanded ? toggle.dataset.collapseLabel || "折叠" : toggle.dataset.expandLabel || "展开";
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+      if (!expanded) {
+        requestAnimationFrame(updateVisibility);
+      }
+    });
+
+    requestAnimationFrame(updateVisibility);
+    window.addEventListener("resize", updateVisibility, { passive: true });
+  });
+</script>  <div class="section-divider"></div> <section class="section-stack section-stack--tight"> <article class="line-entry"> <h2><a href="/recordings/recording-第5号小提琴奏鸣曲-春天-艾丽卡莫莉妮-and-鲁道夫菲尔库什尼/">艾丽卡·莫莉妮 - 鲁道夫·菲尔库什尼 - Berlin - 1961 Deutsche Grammophon GmbH</a></h2> <p class="list-card__subtitle">路德维希·凡·贝多芬 / 第5号小提琴奏鸣曲, “春天”</p> </article> </section> </div>  </main> <footer class="site-footer"> <div class="container site-footer__inner"> <div> <strong>古典导聆不全书</strong> <p>本站仅提供导聆说明与外部资源链接，不存储录音录像文件；相关内容版权归原权利人所有。</p> </div> <div> <span>联系方式</span> <p>QQ 439183718(群) 247996796(管理员)</p> </div> </div> </footer> <script>
+      document.addEventListener("click", async (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-local-resource-link="true"]') : null;
+        if (!(trigger instanceof HTMLAnchorElement)) {
+          return;
+        }
+        event.preventDefault();
+        try {
+          const response = await fetch(trigger.href, {
+            method: "GET",
+            credentials: "same-origin",
+          });
+          if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || `Failed to open local resource (${response.status})`);
+          }
+        } catch (error) {
+          window.alert(error instanceof Error ? error.message : String(error));
+        }
+      });
+    </script> </body> </html>

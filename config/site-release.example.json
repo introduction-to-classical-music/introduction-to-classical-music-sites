@@ -1,0 +1,11 @@
+{
+  "baseUrl": "https://your-domain.example",
+  "version": "v0.1.0",
+  "sourceSitesRoot": "F:\\personal\\Sunhaoran\\OneDrive\\music\\buquanshu\\sites",
+  "publishRoot": "site",
+  "enableIndexNow": false,
+  "cachePolicy": {
+    "html": "max-age=60",
+    "assets": "public,max-age=31536000,immutable"
+  }
+}

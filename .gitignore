@@ -1,0 +1,10 @@
+Thumbs.db
+.DS_Store
+desktop.ini
+
+tmp/
+logs/
+out/
+
+*.log
+*.tmp

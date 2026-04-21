@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>古典导聆不全书 | 沃尔夫冈·施奈德汉</title><meta name="description" content="沃尔夫冈·施奈德汉 的相关版本与出现记录。"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/_astro/about.Zfhg6SaR.css"></head> <body> <header class="site-header"> <div class="container site-header__inner"> <div class="site-header__spacer" aria-hidden="true"></div> <nav class="site-nav" aria-label="主导航"> <a href="/">首页</a><a href="/composers/">作曲家</a><a href="/conductors/">指挥</a><a href="/search/">搜索</a><a href="/about/">关于</a> </nav> <div class="site-search-shell" data-site-search> <button class="site-search__toggle" type="button" aria-label="打开搜索" aria-expanded="false"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M10.5 4.5a6 6 0 1 0 0 12a6 6 0 0 0 0-12Zm0-1.5a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15Zm6.1 12.54l4.43 4.42l-1.06 1.06l-4.42-4.43z"></path> </svg> </button> <form action="/search/" class="site-search" role="search"> <label class="sr-only" for="global-search">搜索</label> <input id="global-search" name="q" type="search" placeholder="搜索作曲家、指挥、乐团、类型、作品"> </form> </div> </div> </header> <script>
+  const searchShell = document.querySelector("[data-site-search]");
+  const toggle = searchShell?.querySelector(".site-search__toggle");
+  const input = searchShell?.querySelector("input");
+
+  toggle?.addEventListener("click", () => {
+    const nextState = !searchShell.classList.contains("is-open");
+    searchShell.classList.toggle("is-open", nextState);
+    toggle.setAttribute("aria-expanded", nextState ? "true" : "false");
+    if (nextState && input instanceof HTMLInputElement) {
+      input.focus();
+    }
+  });
+
+  input?.addEventListener("blur", () => {
+    if (input instanceof HTMLInputElement && !input.value.trim()) {
+      searchShell?.classList.remove("is-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script> <main class="page-shell">  <div class="container page-section"> <div class="section-heading"> <p class="section-heading__eyebrow">Performer</p> <h1>沃尔夫冈·施奈德汉</h1> </div> <p class="page-lead">施耐德汉</p> <p class="page-note">Wolfgang Schneiderhan</p> <p class="page-note">角色：soloist</p> <div class="expandable-summary" data-expandable-summary style="--expandable-summary-lines:8;"><p class="expandable-summary__content body-copy" data-expandable-summary-content>沃尔夫冈·爱德华·施奈德汉（德语：Wolfgang Eduard Schneiderhan；1915年5月28日—2002年5月18日），奥地利小提琴家。施奈德汉生于维也纳，他曾短暂地与奥塔卡·舍夫契克习琴，但主要的学习对象仍是尤利乌斯·温克勒（Julius Winkler）。10岁时，施奈德汉已能公开演奏巴赫D小调夏康舞曲。翌年，他在哥本哈根完成了职业初登场，演奏的曲目则是门德尔松小提琴协奏曲。
+
+1933至1937年间，施奈德汉担任维也纳交响乐团的乐团首席，1937年起转任维也纳爱乐乐团首席，迄1951年止，之后则以独奏家的身份继续音乐活动。
+
+1992年，领衔设立国际克莱斯勒大赛，旨在奖励年轻音乐家的演奏与发展。
+
+施奈德汉在室内乐领域亦有所建树，他曾组建一支弦乐四重奏团，这支团体一直活动到51年止。此外在格奥尔格·库伦坎普夫过世后，施奈德汉递补了他的位置，重建原先由艾德温·费雪、恩里科·梅纳迪所组成的三重奏。
+
+演奏之外，施奈德汉亦是一位教师，他在萨尔茨堡、维也纳与卢塞恩皆有教职。1959年，施奈德汉和鲁道夫·包加纳共同创建了“卢塞恩节庆弦乐团”（Festival Strings Lucerne）。
+
+2002年，施奈德汉于维也纳逝世，享年86岁。</p><div class="expandable-summary__tail" data-expandable-summary-tail><button type="button" class="expandable-summary__toggle expandable-summary__toggle--inline" data-expandable-summary-toggle data-expand-label="展开" data-collapse-label="折叠" aria-expanded="false">
+展开
+</button></div></div><script>
+  const expandableSummaries = document.querySelectorAll("[data-expandable-summary]");
+
+  expandableSummaries.forEach((container) => {
+    const content = container.querySelector("[data-expandable-summary-content]");
+    const toggle = container.querySelector("[data-expandable-summary-toggle]");
+    const tail = container.querySelector("[data-expandable-summary-tail]");
+
+    if (!content || !toggle || !tail) {
+      return;
+    }
+
+    const updateVisibility = () => {
+      const collapsed = !container.classList.contains("is-expanded");
+      const overflowing = content.scrollHeight > content.clientHeight + 2;
+      tail.hidden = !overflowing && collapsed;
+    };
+
+    toggle.addEventListener("click", () => {
+      const expanded = container.classList.toggle("is-expanded");
+      toggle.textContent = expanded ? toggle.dataset.collapseLabel || "折叠" : toggle.dataset.expandLabel || "展开";
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+      if (!expanded) {
+        requestAnimationFrame(updateVisibility);
+      }
+    });
+
+    requestAnimationFrame(updateVisibility);
+    window.addEventListener("resize", updateVisibility, { passive: true });
+  });
+</script>  <div class="section-divider"></div> <section class="section-stack section-stack--tight"> <article class="line-entry"> <h2><a href="/recordings/recording-第5号小提琴奏鸣曲-春天-沃尔夫冈施奈德汉-and-卡尔希曼/">施耐德汉 - 卡尔·西曼 - May, 1959</a></h2> <p class="list-card__subtitle">路德维希·凡·贝多芬 / 第5号小提琴奏鸣曲, “春天”</p> </article><article class="line-entry"> <h2><a href="/recordings/recording-d大调小提琴协奏曲-施耐德汉-and-富特文格勒1953/">富特文格勒 - 施耐德汉 - 柏林爱乐乐团 - Titania Palast Berlin 1953</a></h2> <p class="list-card__subtitle">路德维希·凡·贝多芬 / D大调小提琴协奏曲</p> </article> </section> </div>  </main> <footer class="site-footer"> <div class="container site-footer__inner"> <div> <strong>古典导聆不全书</strong> <p>本站仅提供导聆说明与外部资源链接，不存储录音录像文件；相关内容版权归原权利人所有。</p> </div> <div> <span>联系方式</span> <p>QQ 439183718(群) 247996796(管理员)</p> </div> </div> </footer> <script>
+      document.addEventListener("click", async (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-local-resource-link="true"]') : null;
+        if (!(trigger instanceof HTMLAnchorElement)) {
+          return;
+        }
+        event.preventDefault();
+        try {
+          const response = await fetch(trigger.href, {
+            method: "GET",
+            credentials: "same-origin",
+          });
+          if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || `Failed to open local resource (${response.status})`);
+          }
+        } catch (error) {
+          window.alert(error instanceof Error ? error.message : String(error));
+        }
+      });
+    </script> </body> </html>

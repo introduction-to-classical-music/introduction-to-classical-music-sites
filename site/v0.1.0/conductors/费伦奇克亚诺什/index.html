@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>古典导聆不全书 | 费伦奇克·亚诺什</title><meta name="description" content="费伦奇克·亚诺什 的相关推荐版本索引。"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/_astro/about.Zfhg6SaR.css"></head> <body> <header class="site-header"> <div class="container site-header__inner"> <div class="site-header__spacer" aria-hidden="true"></div> <nav class="site-nav" aria-label="主导航"> <a href="/">首页</a><a href="/composers/">作曲家</a><a href="/conductors/">指挥</a><a href="/search/">搜索</a><a href="/about/">关于</a> </nav> <div class="site-search-shell" data-site-search> <button class="site-search__toggle" type="button" aria-label="打开搜索" aria-expanded="false"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M10.5 4.5a6 6 0 1 0 0 12a6 6 0 0 0 0-12Zm0-1.5a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15Zm6.1 12.54l4.43 4.42l-1.06 1.06l-4.42-4.43z"></path> </svg> </button> <form action="/search/" class="site-search" role="search"> <label class="sr-only" for="global-search">搜索</label> <input id="global-search" name="q" type="search" placeholder="搜索作曲家、指挥、乐团、类型、作品"> </form> </div> </div> </header> <script>
+  const searchShell = document.querySelector("[data-site-search]");
+  const toggle = searchShell?.querySelector(".site-search__toggle");
+  const input = searchShell?.querySelector("input");
+
+  toggle?.addEventListener("click", () => {
+    const nextState = !searchShell.classList.contains("is-open");
+    searchShell.classList.toggle("is-open", nextState);
+    toggle.setAttribute("aria-expanded", nextState ? "true" : "false");
+    if (nextState && input instanceof HTMLInputElement) {
+      input.focus();
+    }
+  });
+
+  input?.addEventListener("blur", () => {
+    if (input instanceof HTMLInputElement && !input.value.trim()) {
+      searchShell?.classList.remove("is-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script> <main class="page-shell">  <div class="container page-section"> <div class="section-heading"> <p class="section-heading__eyebrow">Conductor</p> <h1>费伦奇克·亚诺什</h1> </div> <p class="page-lead">费伦奇克</p> <p class="page-note">Ferencsik János</p> <div class="expandable-summary" data-expandable-summary style="--expandable-summary-lines:8;"><p class="expandable-summary__content body-copy" data-expandable-summary-content>费伦奇克·亚诺什（匈牙利语：Ferencsik János，1907年1月18日 – 1984年6月12日），匈牙利指挥家。
+
+费伦奇克出生于布达佩斯，他在很小的时候就积极地演奏音乐。他学过小提琴，也自学过风琴。他在布达佩斯的国家音乐学院学习，主修管风琴演奏和作曲。20岁时加入匈牙利国家歌剧院，在那里他被聘为排练教练。1930-31年，他以此身份参加了拜罗伊特音乐节。
+
+在拜罗伊特，他协助阿图罗·托斯卡尼尼，这段经历对他余下的职业生涯具有决定性的意义。两次世界大战之间，他在布达佩斯师从托斯卡尼尼、布鲁诺·瓦尔特、费利克斯·魏因加特纳和威廉·富特文格勒等指挥家。
+
+费伦奇克的国际生涯始于1937年。20世纪30年代末，他成为匈牙利歌剧院的主要指挥之一。1940年他在布达佩斯指挥了巴托克·贝拉和巴托克-帕斯托里·迪塔的告别音乐会，就在巴托克离开欧洲大陆之前。他的艺术生涯在1945年后迎来了丰硕的成果，他被任命为布达佩斯歌剧院音乐总监、布达佩斯的匈牙利国家爱乐乐团首席指挥，并在1960年至1967年期间担任布达佩斯爱乐乐团的指挥主席。从1948年到1950年，费伦奇克是维也纳国立歌剧院的首席客座指挥，洛杉矶爱乐乐团的客座指挥，并广泛地在国外巡回演出，在除非洲以外的所有大陆上指挥。
+
+费伦奇克是匈牙利作曲家洛伊陶·拉斯洛、巴托克·贝拉和柯达伊·佐尔丹的朋友，并以演绎他们的作品而闻名。在他的许多唱片中，有两张是柯达利的《纺织屋》。著名的学生包括亚历山大·赖切夫。</p><div class="expandable-summary__tail" data-expandable-summary-tail><button type="button" class="expandable-summary__toggle expandable-summary__toggle--inline" data-expandable-summary-toggle data-expand-label="展开" data-collapse-label="折叠" aria-expanded="false">
+展开
+</button></div></div><script>
+  const expandableSummaries = document.querySelectorAll("[data-expandable-summary]");
+
+  expandableSummaries.forEach((container) => {
+    const content = container.querySelector("[data-expandable-summary-content]");
+    const toggle = container.querySelector("[data-expandable-summary-toggle]");
+    const tail = container.querySelector("[data-expandable-summary-tail]");
+
+    if (!content || !toggle || !tail) {
+      return;
+    }
+
+    const updateVisibility = () => {
+      const collapsed = !container.classList.contains("is-expanded");
+      const overflowing = content.scrollHeight > content.clientHeight + 2;
+      tail.hidden = !overflowing && collapsed;
+    };
+
+    toggle.addEventListener("click", () => {
+      const expanded = container.classList.toggle("is-expanded");
+      toggle.textContent = expanded ? toggle.dataset.collapseLabel || "折叠" : toggle.dataset.expandLabel || "展开";
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+      if (!expanded) {
+        requestAnimationFrame(updateVisibility);
+      }
+    });
+
+    requestAnimationFrame(updateVisibility);
+    window.addEventListener("resize", updateVisibility, { passive: true });
+  });
+</script>  <div class="section-divider"></div> <div class="section-stack section-stack--tight"> <section class="group-listing"> <div class="group-listing__header"> <h2>罗伯特·舒曼</h2> </div> <article class="group-listing__work"> <h3><a href="/works/work-罗伯特舒曼-钢琴协奏曲-a小调钢琴协奏曲/">a小调钢琴协奏曲</a></h3> <ul class="linked-list"> <li><a href="/recordings/recording-a小调钢琴协奏曲-里赫特-and-费伦奇克1954/">费伦奇克 - 里赫特 - 匈牙利国家爱乐乐团 - 布达佩斯音乐学院</a></li> </ul> </article> </section> </div> </div>  </main> <footer class="site-footer"> <div class="container site-footer__inner"> <div> <strong>古典导聆不全书</strong> <p>本站仅提供导聆说明与外部资源链接，不存储录音录像文件；相关内容版权归原权利人所有。</p> </div> <div> <span>联系方式</span> <p>QQ 439183718(群) 247996796(管理员)</p> </div> </div> </footer> <script>
+      document.addEventListener("click", async (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-local-resource-link="true"]') : null;
+        if (!(trigger instanceof HTMLAnchorElement)) {
+          return;
+        }
+        event.preventDefault();
+        try {
+          const response = await fetch(trigger.href, {
+            method: "GET",
+            credentials: "same-origin",
+          });
+          if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || `Failed to open local resource (${response.status})`);
+          }
+        } catch (error) {
+          window.alert(error instanceof Error ? error.message : String(error));
+        }
+      });
+    </script> </body> </html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>古典导聆不全书 | 维托尔德·马库津斯基</title><meta name="description" content="维托尔德·马库津斯基 的相关版本与出现记录。"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/_astro/about.Zfhg6SaR.css"></head> <body> <header class="site-header"> <div class="container site-header__inner"> <div class="site-header__spacer" aria-hidden="true"></div> <nav class="site-nav" aria-label="主导航"> <a href="/">首页</a><a href="/composers/">作曲家</a><a href="/conductors/">指挥</a><a href="/search/">搜索</a><a href="/about/">关于</a> </nav> <div class="site-search-shell" data-site-search> <button class="site-search__toggle" type="button" aria-label="打开搜索" aria-expanded="false"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M10.5 4.5a6 6 0 1 0 0 12a6 6 0 0 0 0-12Zm0-1.5a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15Zm6.1 12.54l4.43 4.42l-1.06 1.06l-4.42-4.43z"></path> </svg> </button> <form action="/search/" class="site-search" role="search"> <label class="sr-only" for="global-search">搜索</label> <input id="global-search" name="q" type="search" placeholder="搜索作曲家、指挥、乐团、类型、作品"> </form> </div> </div> </header> <script>
+  const searchShell = document.querySelector("[data-site-search]");
+  const toggle = searchShell?.querySelector(".site-search__toggle");
+  const input = searchShell?.querySelector("input");
+
+  toggle?.addEventListener("click", () => {
+    const nextState = !searchShell.classList.contains("is-open");
+    searchShell.classList.toggle("is-open", nextState);
+    toggle.setAttribute("aria-expanded", nextState ? "true" : "false");
+    if (nextState && input instanceof HTMLInputElement) {
+      input.focus();
+    }
+  });
+
+  input?.addEventListener("blur", () => {
+    if (input instanceof HTMLInputElement && !input.value.trim()) {
+      searchShell?.classList.remove("is-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script> <main class="page-shell">  <div class="container page-section"> <div class="section-heading"> <p class="section-heading__eyebrow">Performer</p> <h1>维托尔德·马库津斯基</h1> </div>  <p class="page-note">Witold Małcużyński</p> <p class="page-note">角色：soloist</p> <div class="expandable-summary" data-expandable-summary style="--expandable-summary-lines:8;"><p class="expandable-summary__content body-copy" data-expandable-summary-content>维托尔德·马库津斯基（Witold Małcużyński，1914 年 8 月 10 日 - 1977 年 7 月 17 日）是一位波兰钢琴家，专门研究弗雷德里克·肖邦的作品。
+
+Małcużyński 1914 年出生于俄罗斯帝国波兰国会的 Koziczyn。他是波兰政治家和记者卡罗尔·马库津斯基 （Karol Małcużyński） 的哥哥。他 5 岁开始弹钢琴，[1]四年后开始定期上课。最初，他打算学习法律，但他对音乐与生俱来的热爱克服了他最初的决定，他转向音乐并进入华沙音乐学院，并以优异的成绩毕业，师从约瑟夫·图尔钦斯基。1936年，他收到邀请，在巴黎师从玛格丽特·朗和伊西多·菲利普。1937年，他在华沙举行的第三届国际肖邦钢琴比赛中获得三等奖。与此同时，他遇到了他未来的妻子，法国钢琴家科莱特·加沃。
+
+第二次世界大战开始时，他在法国。在那里，他加入了波兰军队的艺术宣传部门，并参观了军营。法国投降后，他和新婚妻子乘坐密封的火车车厢逃往葡萄牙，在那里他遇到了售票员格热戈兹·菲特尔伯格，后者邀请他游览南美洲。Małcużyński 于 1940 年 10 月前往阿根廷。1942 年 4 月，他移居美国。小提琴家耶胡迪·梅纽因 （Yehudi Menuhin） 对他的美国职业生涯至关重要，他最初帮助他解决管理问题。战后，他移居瑞士。
+
+他于 1977 年在西班牙马略卡岛去世，并被安葬在波兰的 Powązki 公墓。</p><div class="expandable-summary__tail" data-expandable-summary-tail><button type="button" class="expandable-summary__toggle expandable-summary__toggle--inline" data-expandable-summary-toggle data-expand-label="展开" data-collapse-label="折叠" aria-expanded="false">
+展开
+</button></div></div><script>
+  const expandableSummaries = document.querySelectorAll("[data-expandable-summary]");
+
+  expandableSummaries.forEach((container) => {
+    const content = container.querySelector("[data-expandable-summary-content]");
+    const toggle = container.querySelector("[data-expandable-summary-toggle]");
+    const tail = container.querySelector("[data-expandable-summary-tail]");
+
+    if (!content || !toggle || !tail) {
+      return;
+    }
+
+    const updateVisibility = () => {
+      const collapsed = !container.classList.contains("is-expanded");
+      const overflowing = content.scrollHeight > content.clientHeight + 2;
+      tail.hidden = !overflowing && collapsed;
+    };
+
+    toggle.addEventListener("click", () => {
+      const expanded = container.classList.toggle("is-expanded");
+      toggle.textContent = expanded ? toggle.dataset.collapseLabel || "折叠" : toggle.dataset.expandLabel || "展开";
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+      if (!expanded) {
+        requestAnimationFrame(updateVisibility);
+      }
+    });
+
+    requestAnimationFrame(updateVisibility);
+    window.addEventListener("resize", updateVisibility, { passive: true });
+  });
+</script>  <div class="section-divider"></div> <section class="section-stack section-stack--tight"> <article class="line-entry"> <h2><a href="/recordings/recording-第二十三号奏鸣曲-热情-维托尔德马库津斯基1963/">维托尔德·马库津斯基 - 1963</a></h2> <p class="list-card__subtitle">路德维希·凡·贝多芬 / 第二十三号奏鸣曲，热情</p> </article> </section> </div>  </main> <footer class="site-footer"> <div class="container site-footer__inner"> <div> <strong>古典导聆不全书</strong> <p>本站仅提供导聆说明与外部资源链接，不存储录音录像文件；相关内容版权归原权利人所有。</p> </div> <div> <span>联系方式</span> <p>QQ 439183718(群) 247996796(管理员)</p> </div> </div> </footer> <script>
+      document.addEventListener("click", async (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-local-resource-link="true"]') : null;
+        if (!(trigger instanceof HTMLAnchorElement)) {
+          return;
+        }
+        event.preventDefault();
+        try {
+          const response = await fetch(trigger.href, {
+            method: "GET",
+            credentials: "same-origin",
+          });
+          if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || `Failed to open local resource (${response.status})`);
+          }
+        } catch (error) {
+          window.alert(error instanceof Error ? error.message : String(error));
+        }
+      });
+    </script> </body> </html>

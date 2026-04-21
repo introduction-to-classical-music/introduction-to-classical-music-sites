@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>古典导聆不全书 | 園田高弘</title><meta name="description" content="園田高弘 的相关版本与出现记录。"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/_astro/about.Zfhg6SaR.css"></head> <body> <header class="site-header"> <div class="container site-header__inner"> <div class="site-header__spacer" aria-hidden="true"></div> <nav class="site-nav" aria-label="主导航"> <a href="/">首页</a><a href="/composers/">作曲家</a><a href="/conductors/">指挥</a><a href="/search/">搜索</a><a href="/about/">关于</a> </nav> <div class="site-search-shell" data-site-search> <button class="site-search__toggle" type="button" aria-label="打开搜索" aria-expanded="false"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M10.5 4.5a6 6 0 1 0 0 12a6 6 0 0 0 0-12Zm0-1.5a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15Zm6.1 12.54l4.43 4.42l-1.06 1.06l-4.42-4.43z"></path> </svg> </button> <form action="/search/" class="site-search" role="search"> <label class="sr-only" for="global-search">搜索</label> <input id="global-search" name="q" type="search" placeholder="搜索作曲家、指挥、乐团、类型、作品"> </form> </div> </div> </header> <script>
+  const searchShell = document.querySelector("[data-site-search]");
+  const toggle = searchShell?.querySelector(".site-search__toggle");
+  const input = searchShell?.querySelector("input");
+
+  toggle?.addEventListener("click", () => {
+    const nextState = !searchShell.classList.contains("is-open");
+    searchShell.classList.toggle("is-open", nextState);
+    toggle.setAttribute("aria-expanded", nextState ? "true" : "false");
+    if (nextState && input instanceof HTMLInputElement) {
+      input.focus();
+    }
+  });
+
+  input?.addEventListener("blur", () => {
+    if (input instanceof HTMLInputElement && !input.value.trim()) {
+      searchShell?.classList.remove("is-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script> <main class="page-shell">  <div class="container page-section"> <div class="section-heading"> <p class="section-heading__eyebrow">Performer</p> <h1>園田高弘</h1> </div>  <p class="page-note">Takahiro Sonoda</p> <p class="page-note">角色：soloist</p> <div class="expandable-summary" data-expandable-summary style="--expandable-summary-lines:8;"><p class="expandable-summary__content body-copy" data-expandable-summary-content>园田于 1928 年出生于野方镇，现为东京的一部分，并更名为中野市。他最初是由他的父亲清秀教钢琴的，他是罗伯特·卡萨德苏斯的学生。1936 年父亲去世后，园田继续学习;三年后，他接受了当时居住在日本的 Leo Sirota 的指导。小学毕业后，他进入东京音乐学院（后被东京艺术大学吸收）。
+
+太平洋战争后，园田开始了他的表演生涯。1952年，他前往欧洲，希望参加日内瓦国际音乐比赛，但未能获得名次。通过田中清子的介绍，他认识了玛格丽特·朗，后者曾短暂地私下执教过他。在柏林，他还接受了赫尔穆特·罗洛夫的指导（日本政府在 1990 年授予罗洛夫圣宝勋章时引用了这一遭遇，以表彰他对日本音乐的贡献）。
+
+1955年，园田回到日本，与一位国际学生同学结婚。1954 年，赫伯特·冯·卡拉扬 （Herbert von Karajan） 首次在日本演出，指挥 NHK 交响乐团，园田担任独奏家。卡拉扬对这个年轻人的演奏印象深刻，说服园田去德国留学，并给他写了一封推荐信。在那里学习后，园田于 1959 年与柏林爱乐乐团首次亮相。次年，他回到日本，成为京都市立艺术大学的教授。晚年，他成为昭和音乐学院的教员。
+
+尽管园田因演奏巴赫、贝多芬和勃拉姆斯等德国经典作品而受到钦佩，但他对现代音乐保持着浓厚的兴趣。他是泷口修三领导的实验工作室的成员，与朋友武满透和真渊敏郎一起。1971年，他与柏林爱乐乐团首演了森井诚的第一钢琴协奏曲。
+
+1989 年 1 月 7 日，昭和天皇去世后，NHK 综合电视台在宣布昭和天皇去世后，播放了园田录制的肖邦葬礼进行曲。1998年，他被日本政府授予文化功勋称号。
+
+2004 年，他在准备即将举行的音乐会时死于主动脉瘤。</p><div class="expandable-summary__tail" data-expandable-summary-tail><button type="button" class="expandable-summary__toggle expandable-summary__toggle--inline" data-expandable-summary-toggle data-expand-label="展开" data-collapse-label="折叠" aria-expanded="false">
+展开
+</button></div></div><script>
+  const expandableSummaries = document.querySelectorAll("[data-expandable-summary]");
+
+  expandableSummaries.forEach((container) => {
+    const content = container.querySelector("[data-expandable-summary-content]");
+    const toggle = container.querySelector("[data-expandable-summary-toggle]");
+    const tail = container.querySelector("[data-expandable-summary-tail]");
+
+    if (!content || !toggle || !tail) {
+      return;
+    }
+
+    const updateVisibility = () => {
+      const collapsed = !container.classList.contains("is-expanded");
+      const overflowing = content.scrollHeight > content.clientHeight + 2;
+      tail.hidden = !overflowing && collapsed;
+    };
+
+    toggle.addEventListener("click", () => {
+      const expanded = container.classList.toggle("is-expanded");
+      toggle.textContent = expanded ? toggle.dataset.collapseLabel || "折叠" : toggle.dataset.expandLabel || "展开";
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+      if (!expanded) {
+        requestAnimationFrame(updateVisibility);
+      }
+    });
+
+    requestAnimationFrame(updateVisibility);
+    window.addEventListener("resize", updateVisibility, { passive: true });
+  });
+</script>  <div class="section-divider"></div> <section class="section-stack section-stack--tight"> <article class="line-entry"> <h2><a href="/recordings/recording-第二十三号奏鸣曲-热情-園田高弘2023/">園田高弘 - 2023.10.31</a></h2> <p class="list-card__subtitle">路德维希·凡·贝多芬 / 第二十三号奏鸣曲，热情</p> </article> </section> </div>  </main> <footer class="site-footer"> <div class="container site-footer__inner"> <div> <strong>古典导聆不全书</strong> <p>本站仅提供导聆说明与外部资源链接，不存储录音录像文件；相关内容版权归原权利人所有。</p> </div> <div> <span>联系方式</span> <p>QQ 439183718(群) 247996796(管理员)</p> </div> </div> </footer> <script>
+      document.addEventListener("click", async (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-local-resource-link="true"]') : null;
+        if (!(trigger instanceof HTMLAnchorElement)) {
+          return;
+        }
+        event.preventDefault();
+        try {
+          const response = await fetch(trigger.href, {
+            method: "GET",
+            credentials: "same-origin",
+          });
+          if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || `Failed to open local resource (${response.status})`);
+          }
+        } catch (error) {
+          window.alert(error instanceof Error ? error.message : String(error));
+        }
+      });
+    </script> </body> </html>

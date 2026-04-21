@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>古典导聆不全书 | 关于</title><meta name="description" content="关于本站和联系方式。"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/_astro/about.Zfhg6SaR.css"></head> <body> <header class="site-header"> <div class="container site-header__inner"> <div class="site-header__spacer" aria-hidden="true"></div> <nav class="site-nav" aria-label="主导航"> <a href="/">首页</a><a href="/composers/">作曲家</a><a href="/conductors/">指挥</a><a href="/search/">搜索</a><a href="/about/">关于</a> </nav> <div class="site-search-shell" data-site-search> <button class="site-search__toggle" type="button" aria-label="打开搜索" aria-expanded="false"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M10.5 4.5a6 6 0 1 0 0 12a6 6 0 0 0 0-12Zm0-1.5a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15Zm6.1 12.54l4.43 4.42l-1.06 1.06l-4.42-4.43z"></path> </svg> </button> <form action="/search/" class="site-search" role="search"> <label class="sr-only" for="global-search">搜索</label> <input id="global-search" name="q" type="search" placeholder="搜索作曲家、指挥、乐团、类型、作品"> </form> </div> </div> </header> <script>
+  const searchShell = document.querySelector("[data-site-search]");
+  const toggle = searchShell?.querySelector(".site-search__toggle");
+  const input = searchShell?.querySelector("input");
+
+  toggle?.addEventListener("click", () => {
+    const nextState = !searchShell.classList.contains("is-open");
+    searchShell.classList.toggle("is-open", nextState);
+    toggle.setAttribute("aria-expanded", nextState ? "true" : "false");
+    if (nextState && input instanceof HTMLInputElement) {
+      input.focus();
+    }
+  });
+
+  input?.addEventListener("blur", () => {
+    if (input instanceof HTMLInputElement && !input.value.trim()) {
+      searchShell?.classList.remove("is-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script> <main class="page-shell">  <div class="container page-section page-section--plain"> <div class="section-heading section-heading--page-intro"> <p class="section-heading__eyebrow">About</p> <h1>关于本站</h1> <p class="page-lead">一个持续更新的古典音乐目录站点，按作曲家、作品类型与人物索引整理版本推荐，帮助乐迷更高效地找到值得聆听的录音与录像。</p> </div> <div class="section-divider"></div> <section class="about-stats"> <h2>收录概况</h2> <dl class="stats-list"> <div> <dt>作曲家</dt> <dd>8</dd> </div><div> <dt>作品</dt> <dd>16</dd> </div><div> <dt>推荐版本</dt> <dd>206</dd> </div><div> <dt>指挥</dt> <dd>85</dd> </div><div> <dt>乐团</dt> <dd>66</dd> </div> </dl> <p class="page-note">最近导入：2026-03-07</p> </section> <div class="section-divider"></div> <div class="section-stack section-stack--tight"> <p class="body-copy">古典导聆不全书是一个面向古典音乐爱好者的公益目录项目。站点以作曲家、作品类型、作品与人物索引为主轴，持续整理值得聆听的推荐版本，并保留必要的演出、专辑与资源信息。</p><p class="body-copy">站内所有条目均来自长期的音乐交流、聆听记录与沙龙讨论总结。推荐并非权威定论，而是为了帮助使用者更快建立版本坐标，在不断扩充的目录中找到清晰的聆听路径。</p><p class="body-copy">如果你发现资料错误、链接失效，或希望提供勘误与建议，欢迎通过下方联系方式与站点维护者联系。</p> <section class="line-entry"> <h2>联系方式</h2> <p>联系方式：QQ 439183718(群) 247996796(管理员)</p> </section> </div> </div>  </main> <footer class="site-footer"> <div class="container site-footer__inner"> <div> <strong>古典导聆不全书</strong> <p>本站仅提供导聆说明与外部资源链接，不存储录音录像文件；相关内容版权归原权利人所有。</p> </div> <div> <span>联系方式</span> <p>QQ 439183718(群) 247996796(管理员)</p> </div> </div> </footer> <script>
+      document.addEventListener("click", async (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-local-resource-link="true"]') : null;
+        if (!(trigger instanceof HTMLAnchorElement)) {
+          return;
+        }
+        event.preventDefault();
+        try {
+          const response = await fetch(trigger.href, {
+            method: "GET",
+            credentials: "same-origin",
+          });
+          if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || `Failed to open local resource (${response.status})`);
+          }
+        } catch (error) {
+          window.alert(error instanceof Error ? error.message : String(error));
+        }
+      });
+    </script> </body> </html>
