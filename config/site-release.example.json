@@ -1,7 +1,7 @@
 {
   "baseUrl": "https://your-domain.example",
   "version": "v0.1.0",
-  "sourceSitesRoot": "F:\\personal\\Sunhaoran\\OneDrive\\music\\buquanshu\\sites",
+  "sourceSitesRoot": "<site-source-root>",
   "publishRoot": "site",
   "enableIndexNow": false,
   "cachePolicy": {
