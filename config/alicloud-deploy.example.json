@@ -1,0 +1,13 @@
+{
+  "version": "v0.1.0",
+  "siteRoot": "site/v0.1.0",
+  "baseUrl": "https://your-domain.example",
+  "ossBucket": "oss://your-bucket-name",
+  "ossEndpoint": "oss-cn-your-region.aliyuncs.com",
+  "cdnDomain": "your-domain.example",
+  "cdnRefreshPaths": [
+    "https://your-domain.example/",
+    "https://your-domain.example/sitemap.xml",
+    "https://your-domain.example/robots.txt"
+  ]
+}
