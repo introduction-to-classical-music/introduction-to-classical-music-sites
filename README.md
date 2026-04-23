@@ -1,5 +1,9 @@
 # 不全书互联网部署仓库
 
+## 访问
+
+https://introduction-to-classical-music.github.io/introduction-to-classical-music-sites/
+
 这个仓库只负责两件事：
 
 - 保存准备上线的静态站点版本
