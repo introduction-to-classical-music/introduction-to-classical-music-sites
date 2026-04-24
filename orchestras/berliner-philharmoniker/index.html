@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>古典导聆不全书 | 柏林爱乐乐团</title><meta name="description" content="柏林爱乐乐团 的相关推荐版本索引。"><link rel="icon" href="/introduction-to-classical-music-sites/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/introduction-to-classical-music-sites/favicon.svg"><link rel="shortcut icon" href="/introduction-to-classical-music-sites/favicon.ico"><link rel="stylesheet" href="/introduction-to-classical-music-sites/_astro/about.Zfhg6SaR.css"></head> <body> <header class="site-header"> <div class="container site-header__inner"> <div class="site-header__spacer" aria-hidden="true"></div> <nav class="site-nav" aria-label="主导航"> <a href="/introduction-to-classical-music-sites/">首页</a><a href="/introduction-to-classical-music-sites/composers/">作曲家</a><a href="/introduction-to-classical-music-sites/conductors/">指挥</a><a href="/introduction-to-classical-music-sites/search/">搜索</a><a href="/introduction-to-classical-music-sites/about/">关于</a> </nav> <div class="site-search-shell" data-site-search> <button class="site-search__toggle" type="button" aria-label="打开搜索" aria-expanded="false"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M10.5 4.5a6 6 0 1 0 0 12a6 6 0 0 0 0-12Zm0-1.5a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15Zm6.1 12.54l4.43 4.42l-1.06 1.06l-4.42-4.43z"></path> </svg> </button> <form action="/introduction-to-classical-music-sites/search/" class="site-search" role="search"> <label class="sr-only" for="global-search">搜索</label> <input id="global-search" name="q" type="search" placeholder="搜索作曲家、指挥、乐团、类型、作品"> </form> </div> </div> </header> <script>
+  const searchShell = document.querySelector("[data-site-search]");
+  const toggle = searchShell?.querySelector(".site-search__toggle");
+  const input = searchShell?.querySelector("input");
+
+  toggle?.addEventListener("click", () => {
+    const nextState = !searchShell.classList.contains("is-open");
+    searchShell.classList.toggle("is-open", nextState);
+    toggle.setAttribute("aria-expanded", nextState ? "true" : "false");
+    if (nextState && input instanceof HTMLInputElement) {
+      input.focus();
+    }
+  });
+
+  input?.addEventListener("blur", () => {
+    if (input instanceof HTMLInputElement && !input.value.trim()) {
+      searchShell?.classList.remove("is-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script> <main class="page-shell">  <div class="container page-section"> <div class="section-heading"> <p class="section-heading__eyebrow">Orchestra</p> <h1>柏林爱乐乐团</h1> </div> <p class="page-lead">柏林爱乐</p> <p class="page-note">Berliner Philharmoniker</p> <div class="expandable-summary" data-expandable-summary style="--expandable-summary-lines:8;"><p class="expandable-summary__content body-copy" data-expandable-summary-content>德国柏林的主要交响乐团，成立于1882年，以卓越的艺术水准闻名世界。柏林爱乐乐团成立于1882年，是德国管弦乐团。彪罗、尼基什、富特文格勒等历任指挥为其奠定风格基础。卡拉扬执掌34年，极大提升了乐团的艺术水准与国际影响力，并迁入柏林爱乐音乐厅。</p></div><script>
+  const expandableSummaries = document.querySelectorAll("[data-expandable-summary]");
+
+  expandableSummaries.forEach((container) => {
+    const content = container.querySelector("[data-expandable-summary-content]");
+    const toggle = container.querySelector("[data-expandable-summary-toggle]");
+    const tail = container.querySelector("[data-expandable-summary-tail]");
+
+    if (!content || !toggle || !tail) {
+      return;
+    }
+
+    const updateVisibility = () => {
+      const collapsed = !container.classList.contains("is-expanded");
+      const overflowing = content.scrollHeight > content.clientHeight + 2;
+      tail.hidden = !overflowing && collapsed;
+    };
+
+    toggle.addEventListener("click", () => {
+      const expanded = container.classList.toggle("is-expanded");
+      toggle.textContent = expanded ? toggle.dataset.collapseLabel || "折叠" : toggle.dataset.expandLabel || "展开";
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+      if (!expanded) {
+        requestAnimationFrame(updateVisibility);
+      }
+    });
+
+    requestAnimationFrame(updateVisibility);
+    window.addEventListener("resize", updateVisibility, { passive: true });
+  });
+</script>  <div class="section-divider"></div> <div class="section-stack section-stack--tight"> <section class="group-listing"> <div class="group-listing__header"> <h2>安东·布鲁克纳</h2> </div> <article class="group-listing__work"> <h3><a href="/works/work-布鲁克纳-交响曲-第七交响曲/">第七交响曲</a></h3> <ul class="linked-list"> <li><a href="/recordings/recording-第七交响曲-伯姆bpo1977/">伯姆 - 柏林爱乐乐团 - 3/24 1977 live Berlin</a></li><li><a href="/recordings/recording-第七交响曲-克伦佩勒1958/">克伦佩勒 - 柏林爱乐乐团 - 1958</a></li><li><a href="/recordings/recording-第七交响曲-富特文格勒1951/">富特文格勒 - 柏林爱乐乐团 - 1951.5.1</a></li><li><a href="/recordings/recording-第七交响曲-朱里尼1985/">朱里尼 - 柏林爱乐乐团 - 1985</a></li><li><a href="/recordings/recording-第七交响曲-海廷克bpo2019/">海廷克 - 柏林爱乐乐团 - 2019</a></li><li><a href="/recordings/recording-第七交响曲-舒里希特bpo/">舒里希特 - 柏林爱乐乐团</a></li> </ul> </article> </section><section class="group-listing"> <div class="group-listing__header"> <h2>古斯塔夫·马勒</h2> </div> <article class="group-listing__work"> <h3><a href="/works/work-马勒-交响曲-第七交响曲/">第七交响曲</a></h3> <ul class="linked-list"> <li><a href="/recordings/recording-第七交响曲-吉伦1994/">吉伦 - 柏林爱乐乐团 - 21.9.1994</a></li><li><a href="/recordings/recording-第七交响曲-拉特1999/">拉特 - 柏林爱乐乐团 - Philharmonie, Berlin. June 10, 1999</a></li><li><a href="/recordings/recording-第七交响曲-阿巴多2001/">阿巴多 - 柏林爱乐乐团 - Philharmonie, Berlin, 2001</a></li> </ul> </article><article class="group-listing__work"> <h3><a href="/works/work-马勒-交响曲-第五交响曲/">第五交响曲</a></h3> <ul class="linked-list"> <li><a href="/recordings/recording-第五交响曲-阿巴多1993/">阿巴多 - 柏林爱乐乐团 - 1993 Deutsche Grammophon GmbH</a></li><li><a href="/recordings/recording-第五交响曲-霍伦斯坦1961/">霍伦斯坦 - 柏林爱乐乐团 - Edinburgh Festival, 31 August, 1961, Usher Hall, Edinburgh</a></li> </ul> </article> </section><section class="group-listing"> <div class="group-listing__header"> <h2>赫克托·路易·柏辽兹</h2> </div> <article class="group-listing__work"> <h3><a href="/works/work-柏辽兹-交响曲-幻想交响曲/">幻想交响曲</a></h3> <ul class="linked-list"> <li><a href="/recordings/recording-幻想交响曲-杨松斯2001/">杨松斯 - 柏林爱乐乐团 - 2001</a></li> </ul> </article> </section><section class="group-listing"> <div class="group-listing__header"> <h2>理查·施特劳斯</h2> </div> <article class="group-listing__work"> <h3><a href="/works/work-理查施特劳斯-交响诗-阿尔卑斯山交响曲/">阿尔卑斯山交响曲</a></h3> <ul class="linked-list"> <li><a href="/recordings/recording-阿尔卑斯山交响曲-卡拉扬1982/">卡拉扬 - 柏林爱乐乐团 - August 28, 1982, at the Salzburg Festival Hall, Salzburg</a></li> </ul> </article> </section><section class="group-listing"> <div class="group-listing__header"> <h2>路德维希·凡·贝多芬</h2> </div> <article class="group-listing__work"> <h3><a href="/works/work-贝多芬-交响曲-第九交响曲合唱/">第九交响曲“合唱”</a></h3> <ul class="linked-list"> <li><a href="/recordings/recording-第九交响曲合唱-卡拉扬1977/">卡拉扬 - 柏林爱乐乐团 - 1977</a></li><li><a href="/recordings/recording-第九交响曲合唱-富特1942/">富特文格勒 - 柏林爱乐乐团 - 1942</a></li><li><a href="/recordings/recording-第九交响曲合唱-弗里乔伊1958/">费伦茨·弗里乔伊 - 柏林爱乐乐团 - 1958</a></li><li><a href="/recordings/recording-第九交响曲合唱-弗里乔伊/">费伦茨·弗里乔伊 - 柏林爱乐乐团</a></li> </ul> </article><article class="group-listing__work"> <h3><a href="/works/work-贝多芬-交响曲-第七交响曲/">第七交响曲</a></h3> <ul class="linked-list"> <li><a href="/recordings/recording-第七交响曲-卡拉扬1963/">卡拉扬 - 柏林爱乐乐团 - 1963</a></li><li><a href="/recordings/recording-第七交响曲-卡拉扬1976/">卡拉扬 - 柏林爱乐乐团 - 1976，柏林</a></li><li><a href="/recordings/recording-第七交响曲-卡拉扬1983/">卡拉扬 - 柏林爱乐乐团 - 1983</a></li><li><a href="/recordings/recording-第七交响曲-富特文格勒1943/">富特文格勒 - 柏林爱乐乐团 - 1943</a></li><li><a href="/recordings/recording-第七交响曲-富特文格勒1953/">富特文格勒 - 柏林爱乐乐团 - 1953，柏林，泰坦尼亚宫</a></li> </ul> </article><article class="group-listing__work"> <h3><a href="/works/work-贝多芬-交响曲-第三交响曲英雄/">第三交响曲“英雄”</a></h3> <ul class="linked-list"> <li><a href="/recordings/recording-第三交响曲英雄-卡拉扬-1971/">卡拉扬 - 柏林爱乐乐团 - 1971</a></li> </ul> </article><article class="group-listing__work"> <h3><a href="/works/work-贝多芬-交响曲-第五交响曲命运/">第五交响曲“命运”</a></h3> <ul class="linked-list"> <li><a href="/recordings/recording-第五交响曲命运-卡拉扬-1962/">卡拉扬 - 柏林爱乐乐团 - 1962</a></li><li><a href="/recordings/recording-第五交响曲命运-卡拉扬-1963/">卡拉扬 - 柏林爱乐乐团 - 1963</a></li><li><a href="/recordings/recording-第五交响曲命运-富特-1943/">富特文格勒 - 柏林爱乐乐团 - 1943</a></li> </ul> </article><article class="group-listing__work"> <h3><a href="/works/work-贝多芬-小提琴协奏曲-d大调小提琴协奏曲/">D大调小提琴协奏曲</a></h3> <ul class="linked-list"> <li><a href="/recordings/recording-d大调小提琴协奏曲-卡瓦科斯-and-梅塔2009/">祖宾·梅塔 - 卡瓦科斯 - 柏林爱乐乐团 - 6 December 2009</a></li><li><a href="/recordings/recording-d大调小提琴协奏曲-施耐德汉-and-富特文格勒1953/">富特文格勒 - 施耐德汉 - 柏林爱乐乐团 - Titania Palast Berlin 1953</a></li><li><a href="/recordings/recording-d大调小提琴协奏曲-梅纽因-and-富特文格勒1953/">富特文格勒 - 梅纽因 - 柏林爱乐乐团 - Titania Palast Berlin 1953</a></li><li><a href="/recordings/recording-d大调小提琴协奏曲-罗恩-and-富特文格勒1944/">富特文格勒 - 罗恩 - 柏林爱乐乐团 - Alte Philharmonie, Berlin, 12th January, 1944</a></li><li><a href="/recordings/recording-d大调小提琴协奏曲-费拉斯-and-伯姆1951/">伯姆 - 费拉斯 - 柏林爱乐乐团 - 1951</a></li> </ul> </article> </section><section class="group-listing"> <div class="group-listing__header"> <h2>罗伯特·舒曼</h2> </div> <article class="group-listing__work"> <h3><a href="/works/work-罗伯特舒曼-钢琴协奏曲-a小调钢琴协奏曲/">a小调钢琴协奏曲</a></h3> <ul class="linked-list"> <li><a href="/recordings/recording-a小调钢琴协奏曲-吉泽金-and-富特文格勒1942/">富特文格勒 - 吉泽金 - 柏林爱乐乐团 - March 3, 1942 Berlin</a></li><li><a href="/recordings/recording-a小调钢琴协奏曲-科尔托-and-弗里乔伊1951/">费伦茨·弗里乔伊 - 科尔托 - 柏林爱乐乐团 - 1951</a></li> </ul> </article> </section> </div> </div>  </main> <footer class="site-footer"> <div class="container site-footer__inner"> <div> <strong>古典导聆不全书</strong> <p>本站仅提供导聆说明与外部资源链接，不存储录音录像文件；相关内容版权归原权利人所有。</p> </div> <div> <span>联系方式</span> <p>QQ 439183718(群) 247996796(管理员)</p> </div> </div> </footer> <script>
+      document.addEventListener("click", async (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-local-resource-link="true"]') : null;
+        if (!(trigger instanceof HTMLAnchorElement)) {
+          return;
+        }
+        event.preventDefault();
+        try {
+          const response = await fetch(trigger.href, {
+            method: "GET",
+            credentials: "same-origin",
+          });
+          if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || `Failed to open local resource (${response.status})`);
+          }
+        } catch (error) {
+          window.alert(error instanceof Error ? error.message : String(error));
+        }
+      });
+    </script> </body> </html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>古典导聆不全书 | 西蒙·拉特尔</title><meta name="description" content="西蒙·拉特尔 的相关推荐版本索引。"><link rel="icon" href="/introduction-to-classical-music-sites/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/introduction-to-classical-music-sites/favicon.svg"><link rel="shortcut icon" href="/introduction-to-classical-music-sites/favicon.ico"><link rel="stylesheet" href="/introduction-to-classical-music-sites/_astro/about.Zfhg6SaR.css"></head> <body> <header class="site-header"> <div class="container site-header__inner"> <div class="site-header__spacer" aria-hidden="true"></div> <nav class="site-nav" aria-label="主导航"> <a href="/introduction-to-classical-music-sites/">首页</a><a href="/introduction-to-classical-music-sites/composers/">作曲家</a><a href="/introduction-to-classical-music-sites/conductors/">指挥</a><a href="/introduction-to-classical-music-sites/search/">搜索</a><a href="/introduction-to-classical-music-sites/about/">关于</a> </nav> <div class="site-search-shell" data-site-search> <button class="site-search__toggle" type="button" aria-label="打开搜索" aria-expanded="false"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M10.5 4.5a6 6 0 1 0 0 12a6 6 0 0 0 0-12Zm0-1.5a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15Zm6.1 12.54l4.43 4.42l-1.06 1.06l-4.42-4.43z"></path> </svg> </button> <form action="/introduction-to-classical-music-sites/search/" class="site-search" role="search"> <label class="sr-only" for="global-search">搜索</label> <input id="global-search" name="q" type="search" placeholder="搜索作曲家、指挥、乐团、类型、作品"> </form> </div> </div> </header> <script>
+  const searchShell = document.querySelector("[data-site-search]");
+  const toggle = searchShell?.querySelector(".site-search__toggle");
+  const input = searchShell?.querySelector("input");
+
+  toggle?.addEventListener("click", () => {
+    const nextState = !searchShell.classList.contains("is-open");
+    searchShell.classList.toggle("is-open", nextState);
+    toggle.setAttribute("aria-expanded", nextState ? "true" : "false");
+    if (nextState && input instanceof HTMLInputElement) {
+      input.focus();
+    }
+  });
+
+  input?.addEventListener("blur", () => {
+    if (input instanceof HTMLInputElement && !input.value.trim()) {
+      searchShell?.classList.remove("is-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script> <main class="page-shell">  <div class="container page-section"> <div class="section-heading"> <p class="section-heading__eyebrow">Conductor</p> <h1>西蒙·拉特尔</h1> </div> <p class="page-lead">拉特</p> <p class="page-note">Simon Rattle</p> <div class="expandable-summary" data-expandable-summary style="--expandable-summary-lines:8;"><p class="expandable-summary__content body-copy" data-expandable-summary-content>西蒙·拉特尔（Simon Rattle），1955年1月19日出生于英国利物浦，毕业于伦敦皇家音乐学院，英国指挥家。
+
+1970年，与利物浦皇家爱乐乐团合作，举行了首场交响音乐会。1971年，进入伦敦皇家音乐学院学习指挥。1974年，在英国伯恩茅茨举行的约翰·普莱尔国际指挥比赛中获得冠军，奠定职业指挥家的基础。1979年迎来事业转折，受聘担任伯明翰市立交响乐团的常任指挥。1981年，被洛杉矶爱乐乐团聘为首席客座指挥。1987年，与伯明翰市立交响乐团合作录制马勒《第二交响曲》，并于同年首次执棒柏林爱乐乐团。1993年，被英国政府、《留声机》杂志授予年度艺术家称号。1994年，被英国女王授予爵士头衔。1997年，被BBC音乐杂志授予“最佳音乐家成就奖”。1999年，与维也纳爱乐乐团合作的《贝多芬钢琴协奏曲全集》获法国唱片大奖。2000年，联合国教科文组织将他选为“和平艺术家”。
+
+2002年，正式成为柏林爱乐乐团的首席指挥。2003年，当选为德国古典回声奖“年度最佳指挥”。2009年，开始推广柏林爱乐的“数字音乐厅”；同年，荣获格莱美“最佳合唱表演奖。2012年，被列入《留声机》杂志“名人堂”名单。2017年，出任伦敦交响乐团音乐总监。</p><div class="expandable-summary__tail" data-expandable-summary-tail><button type="button" class="expandable-summary__toggle expandable-summary__toggle--inline" data-expandable-summary-toggle data-expand-label="展开" data-collapse-label="折叠" aria-expanded="false">
+展开
+</button></div></div><script>
+  const expandableSummaries = document.querySelectorAll("[data-expandable-summary]");
+
+  expandableSummaries.forEach((container) => {
+    const content = container.querySelector("[data-expandable-summary-content]");
+    const toggle = container.querySelector("[data-expandable-summary-toggle]");
+    const tail = container.querySelector("[data-expandable-summary-tail]");
+
+    if (!content || !toggle || !tail) {
+      return;
+    }
+
+    const updateVisibility = () => {
+      const collapsed = !container.classList.contains("is-expanded");
+      const overflowing = content.scrollHeight > content.clientHeight + 2;
+      tail.hidden = !overflowing && collapsed;
+    };
+
+    toggle.addEventListener("click", () => {
+      const expanded = container.classList.toggle("is-expanded");
+      toggle.textContent = expanded ? toggle.dataset.collapseLabel || "折叠" : toggle.dataset.expandLabel || "展开";
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+      if (!expanded) {
+        requestAnimationFrame(updateVisibility);
+      }
+    });
+
+    requestAnimationFrame(updateVisibility);
+    window.addEventListener("resize", updateVisibility, { passive: true });
+  });
+</script>  <div class="section-divider"></div> <div class="section-stack section-stack--tight"> <section class="group-listing"> <div class="group-listing__header"> <h2>古斯塔夫·马勒</h2> </div> <article class="group-listing__work"> <h3><a href="/works/work-马勒-交响曲-第七交响曲/">第七交响曲</a></h3> <ul class="linked-list"> <li><a href="/recordings/recording-第七交响曲-拉特1999/">拉特 - 柏林爱乐乐团 - Philharmonie, Berlin. June 10, 1999</a></li> </ul> </article> </section> </div> </div>  </main> <footer class="site-footer"> <div class="container site-footer__inner"> <div> <strong>古典导聆不全书</strong> <p>本站仅提供导聆说明与外部资源链接，不存储录音录像文件；相关内容版权归原权利人所有。</p> </div> <div> <span>联系方式</span> <p>QQ 439183718(群) 247996796(管理员)</p> </div> </div> </footer> <script>
+      document.addEventListener("click", async (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-local-resource-link="true"]') : null;
+        if (!(trigger instanceof HTMLAnchorElement)) {
+          return;
+        }
+        event.preventDefault();
+        try {
+          const response = await fetch(trigger.href, {
+            method: "GET",
+            credentials: "same-origin",
+          });
+          if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || `Failed to open local resource (${response.status})`);
+          }
+        } catch (error) {
+          window.alert(error instanceof Error ? error.message : String(error));
+        }
+      });
+    </script> </body> </html>

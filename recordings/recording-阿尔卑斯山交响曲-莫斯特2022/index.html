@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>古典导聆不全书 | 莫斯特 - 维也纳爱乐乐团 - 2022</title><meta name="description" content="莫斯特 - 维也纳爱乐乐团 - 2022 的演出信息与资源链接。"><link rel="icon" href="/introduction-to-classical-music-sites/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/introduction-to-classical-music-sites/favicon.svg"><link rel="shortcut icon" href="/introduction-to-classical-music-sites/favicon.ico"><link rel="stylesheet" href="/introduction-to-classical-music-sites/_astro/about.Zfhg6SaR.css"></head> <body> <header class="site-header"> <div class="container site-header__inner"> <div class="site-header__spacer" aria-hidden="true"></div> <nav class="site-nav" aria-label="主导航"> <a href="/introduction-to-classical-music-sites/">首页</a><a href="/introduction-to-classical-music-sites/composers/">作曲家</a><a href="/introduction-to-classical-music-sites/conductors/">指挥</a><a href="/introduction-to-classical-music-sites/search/">搜索</a><a href="/introduction-to-classical-music-sites/about/">关于</a> </nav> <div class="site-search-shell" data-site-search> <button class="site-search__toggle" type="button" aria-label="打开搜索" aria-expanded="false"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M10.5 4.5a6 6 0 1 0 0 12a6 6 0 0 0 0-12Zm0-1.5a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15Zm6.1 12.54l4.43 4.42l-1.06 1.06l-4.42-4.43z"></path> </svg> </button> <form action="/introduction-to-classical-music-sites/search/" class="site-search" role="search"> <label class="sr-only" for="global-search">搜索</label> <input id="global-search" name="q" type="search" placeholder="搜索作曲家、指挥、乐团、类型、作品"> </form> </div> </div> </header> <script>
+  const searchShell = document.querySelector("[data-site-search]");
+  const toggle = searchShell?.querySelector(".site-search__toggle");
+  const input = searchShell?.querySelector("input");
+
+  toggle?.addEventListener("click", () => {
+    const nextState = !searchShell.classList.contains("is-open");
+    searchShell.classList.toggle("is-open", nextState);
+    toggle.setAttribute("aria-expanded", nextState ? "true" : "false");
+    if (nextState && input instanceof HTMLInputElement) {
+      input.focus();
+    }
+  });
+
+  input?.addEventListener("blur", () => {
+    if (input instanceof HTMLInputElement && !input.value.trim()) {
+      searchShell?.classList.remove("is-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script> <main class="page-shell">  <div class="container page-section recording-page"> <div class="section-heading"> <p class="section-heading__eyebrow">Recording</p> <h1>莫斯特 - 维也纳爱乐乐团 - 2022</h1> <p class="page-lead">Welser-Möst - Vienna Philharmonic Orchestra - 2022</p> <p class="page-note"> <a href="/introduction-to-classical-music-sites/works/work-理查施特劳斯-交响诗-阿尔卑斯山交响曲/">阿尔卑斯山交响曲</a>  / 理查·施特劳斯 </p> </div> <div class="section-divider"></div> <section class="recording-page__top"> <div class="recording-page__gallery"> <div class="recording-page__placeholder">暂无图片</div> </div> <div class="recording-page__details"> <dl class="metadata-list">  <dt>乐团</dt> <dd> <a href="/introduction-to-classical-music-sites/orchestras/wiener-philharmoniker/">维也纳爱乐乐团</a> </dd>  <dt>指挥</dt> <dd> <a href="/introduction-to-classical-music-sites/conductors/弗朗茨威尔瑟-莫斯特/">莫斯特</a> </dd>   <dt>时间</dt> <dd>2022</dd>      </dl> </div> </section>    <div class="section-divider section-divider--short"></div> <section> <div class="section-heading section-heading--subsection"> <p class="section-heading__eyebrow">Resource Links</p> <h2>资源链接</h2> </div> <ul class="resource-list resource-list--buttons"> <li> <a href="https://www.bilibili.com/video/BV13K4y1q7n6" target="_blank" rel="noreferrer" title="https://www.bilibili.com/video/BV13K4y1q7n6"> https://www.bilibili.com/video/BV13K4y1q7n6 </a> </li> </ul> </section>  </div>  </main> <footer class="site-footer"> <div class="container site-footer__inner"> <div> <strong>古典导聆不全书</strong> <p>本站仅提供导聆说明与外部资源链接，不存储录音录像文件；相关内容版权归原权利人所有。</p> </div> <div> <span>联系方式</span> <p>QQ 439183718(群) 247996796(管理员)</p> </div> </div> </footer> <script>
+      document.addEventListener("click", async (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-local-resource-link="true"]') : null;
+        if (!(trigger instanceof HTMLAnchorElement)) {
+          return;
+        }
+        event.preventDefault();
+        try {
+          const response = await fetch(trigger.href, {
+            method: "GET",
+            credentials: "same-origin",
+          });
+          if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || `Failed to open local resource (${response.status})`);
+          }
+        } catch (error) {
+          window.alert(error instanceof Error ? error.message : String(error));
+        }
+      });
+    </script> </body> </html>

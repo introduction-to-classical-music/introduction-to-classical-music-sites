@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>古典导聆不全书 | d小调小提琴协奏曲</title><meta name="description" content="《d 小调小提琴协奏曲》（Op. 47）是西贝柳斯最重要的协奏曲作品，以北欧气质、独奏技巧难度和冷峻抒情并见而闻名。"><link rel="icon" href="/introduction-to-classical-music-sites/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/introduction-to-classical-music-sites/favicon.svg"><link rel="shortcut icon" href="/introduction-to-classical-music-sites/favicon.ico"><link rel="stylesheet" href="/introduction-to-classical-music-sites/_astro/about.Zfhg6SaR.css"></head> <body> <header class="site-header"> <div class="container site-header__inner"> <div class="site-header__spacer" aria-hidden="true"></div> <nav class="site-nav" aria-label="主导航"> <a href="/introduction-to-classical-music-sites/">首页</a><a href="/introduction-to-classical-music-sites/composers/">作曲家</a><a href="/introduction-to-classical-music-sites/conductors/">指挥</a><a href="/introduction-to-classical-music-sites/search/">搜索</a><a href="/introduction-to-classical-music-sites/about/">关于</a> </nav> <div class="site-search-shell" data-site-search> <button class="site-search__toggle" type="button" aria-label="打开搜索" aria-expanded="false"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M10.5 4.5a6 6 0 1 0 0 12a6 6 0 0 0 0-12Zm0-1.5a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15Zm6.1 12.54l4.43 4.42l-1.06 1.06l-4.42-4.43z"></path> </svg> </button> <form action="/introduction-to-classical-music-sites/search/" class="site-search" role="search"> <label class="sr-only" for="global-search">搜索</label> <input id="global-search" name="q" type="search" placeholder="搜索作曲家、指挥、乐团、类型、作品"> </form> </div> </div> </header> <script>
+  const searchShell = document.querySelector("[data-site-search]");
+  const toggle = searchShell?.querySelector(".site-search__toggle");
+  const input = searchShell?.querySelector("input");
+
+  toggle?.addEventListener("click", () => {
+    const nextState = !searchShell.classList.contains("is-open");
+    searchShell.classList.toggle("is-open", nextState);
+    toggle.setAttribute("aria-expanded", nextState ? "true" : "false");
+    if (nextState && input instanceof HTMLInputElement) {
+      input.focus();
+    }
+  });
+
+  input?.addEventListener("blur", () => {
+    if (input instanceof HTMLInputElement && !input.value.trim()) {
+      searchShell?.classList.remove("is-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script> <main class="page-shell">  <div class="container page-section"> <section class="section-heading section-heading--centered"> <p class="section-heading__eyebrow">Work</p> <h1>d小调小提琴协奏曲</h1> <p class="page-note"> 让·西贝柳斯  / 小提琴协奏曲 </p>   </section> <div class="expandable-summary composer-summary" data-expandable-summary style="--expandable-summary-lines:8;"><p class="expandable-summary__content body-copy" data-expandable-summary-content>《d 小调小提琴协奏曲》（Op. 47）是西贝柳斯最重要的协奏曲作品，以北欧气质、独奏技巧难度和冷峻抒情并见而闻名。</p></div><script>
+  const expandableSummaries = document.querySelectorAll("[data-expandable-summary]");
+
+  expandableSummaries.forEach((container) => {
+    const content = container.querySelector("[data-expandable-summary-content]");
+    const toggle = container.querySelector("[data-expandable-summary-toggle]");
+    const tail = container.querySelector("[data-expandable-summary-tail]");
+
+    if (!content || !toggle || !tail) {
+      return;
+    }
+
+    const updateVisibility = () => {
+      const collapsed = !container.classList.contains("is-expanded");
+      const overflowing = content.scrollHeight > content.clientHeight + 2;
+      tail.hidden = !overflowing && collapsed;
+    };
+
+    toggle.addEventListener("click", () => {
+      const expanded = container.classList.toggle("is-expanded");
+      toggle.textContent = expanded ? toggle.dataset.collapseLabel || "折叠" : toggle.dataset.expandLabel || "展开";
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+      if (!expanded) {
+        requestAnimationFrame(updateVisibility);
+      }
+    });
+
+    requestAnimationFrame(updateVisibility);
+    window.addEventListener("resize", updateVisibility, { passive: true });
+  });
+</script>  <div class="section-divider"></div> <section> <div class="section-heading section-heading--centered section-heading--subsection"> <p class="section-heading__eyebrow">Recommended Recordings</p> <h2>推荐版本</h2> </div> <div class="work-recording-list"> <article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/introduction-to-classical-music-sites/recordings/recording-d小调小提琴协奏曲-伊格内修斯-and-施内沃伊特1945/">施内沃伊特 - 伊格内修斯 - 赫尔辛基爱乐乐团 - 芬兰广播乐团 - 1945.12.8</a></h3> <p class="page-note">Schnéevoigt - Ignatius - Helsinki Philharmonic Orchestra - Radio-orkesteri - 1945.12.8</p> <p class="page-note">1945.12.8</p>  </div> <div class="work-recording__meta"> <span>主推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/introduction-to-classical-music-sites/recordings/recording-d小调小提琴协奏曲-佩妮曼-and-凯尔伯特1967/">凯尔伯特 - 佩妮曼 - 科隆交响乐团 - 1967</a></h3> <p class="page-note">Keilberth - Peinemann - Cologne Symphony Orchestra - 1967</p> <p class="page-note">1967</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/introduction-to-classical-music-sites/recordings/recording-d小调小提琴协奏曲-佩妮曼-and-布尔1952/">欧内斯特·布尔 - 佩妮曼 - 西南德意志广播交响乐团 - 1952*</a></h3> <p class="page-note">Bour - Peinemann - SWR Sinfonieorchester Baden-Baden und Freiburg - 1952*</p> <p class="page-note">1952*</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/introduction-to-classical-music-sites/recordings/recording-d小调小提琴协奏曲-卡瓦科斯-and-万斯凯1991/">奥斯莫·万斯凯 - 卡瓦科斯 - 拉赫蒂交响乐团 - 1991*</a></h3> <p class="page-note">Vänskä - Kavakos - Lahti Symphony Orchestra - 1991*</p> <p class="page-note">1991*</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/introduction-to-classical-music-sites/recordings/recording-d小调小提琴协奏曲-吉特列斯-and-霍伦斯坦1992/">霍伦斯坦 - 吉特利斯 - 维也纳爱乐乐团 - 2017</a></h3> <p class="page-note">Horenstein - Gitlis - Vienna Philharmonic Orchestra - 2017</p> <p class="page-note">2017</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/introduction-to-classical-music-sites/recordings/recording-d小调小提琴协奏曲-吉特利斯-and-塞尔2017/">赛尔 - 吉特利斯 - 纽约爱乐乐团 - 2017</a></h3> <p class="page-note">Szell - Gitlis - New York Philharmonic - 2017</p> <p class="page-note">2017</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/introduction-to-classical-music-sites/recordings/recording-d小调小提琴协奏曲-奥伊斯特拉赫-and-埃尔林1956/">西克斯滕·埃尔林 - 奥伊斯特拉赫 - 斯德哥尔摩节日管弦乐团 - 1956*</a></h3> <p class="page-note">Ehrling - Oistrakh - Stockholm Festival Orchestra - 1956*</p> <p class="page-note">1956*</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/introduction-to-classical-music-sites/recordings/recording-d小调小提琴协奏曲-威克斯-and-埃尔林1952/">西克斯滕·埃尔林 - 威克斯 - 皇家斯德哥尔摩爱乐乐团 - 1952</a></h3> <p class="page-note">Ehrling - Wicks - Royal Stockholm Philharmonic Orchestra - 1952</p> <p class="page-note">1952</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/introduction-to-classical-music-sites/recordings/recording-d小调小提琴协奏曲-弗里德-and-卡姆1987/">奥科·卡姆 - 弗里德 - 赫尔辛基爱乐乐团 - 1987</a></h3> <p class="page-note">Kamu - Fried - Helsinki Philharmonic Orchestra - 1987</p> <p class="page-note">1987</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/introduction-to-classical-music-sites/recordings/recording-d小调小提琴协奏曲-海菲兹-and-米特罗普洛斯1951/">米特罗普洛斯 - 海菲兹 - 纽约爱乐乐团 - 1951</a></h3> <p class="page-note">Mitropoulos - Jascha·Heifetz - New York Philharmonic - 1951</p> <p class="page-note">1951</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article><article class="work-recording"> <div class="work-recording__thumb work-recording__thumb--empty">无图</div> <div class="work-recording__body"> <h3><a href="/introduction-to-classical-music-sites/recordings/recording-d小调小提琴协奏曲-达莱内-and-斯托加德2021/">约翰·斯托加德 - 达莱内 - 皇家斯德哥尔摩爱乐乐团 - 2021</a></h3> <p class="page-note">Storgårds - Dalene - Royal Stockholm Philharmonic Orchestra - 2021</p> <p class="page-note">2021</p>  </div> <div class="work-recording__meta"> <span>推荐</span> </div> </article> </div> </section> </div>  </main> <footer class="site-footer"> <div class="container site-footer__inner"> <div> <strong>古典导聆不全书</strong> <p>本站仅提供导聆说明与外部资源链接，不存储录音录像文件；相关内容版权归原权利人所有。</p> </div> <div> <span>联系方式</span> <p>QQ 439183718(群) 247996796(管理员)</p> </div> </div> </footer> <script>
+      document.addEventListener("click", async (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-local-resource-link="true"]') : null;
+        if (!(trigger instanceof HTMLAnchorElement)) {
+          return;
+        }
+        event.preventDefault();
+        try {
+          const response = await fetch(trigger.href, {
+            method: "GET",
+            credentials: "same-origin",
+          });
+          if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || `Failed to open local resource (${response.status})`);
+          }
+        } catch (error) {
+          window.alert(error instanceof Error ? error.message : String(error));
+        }
+      });
+    </script> </body> </html>

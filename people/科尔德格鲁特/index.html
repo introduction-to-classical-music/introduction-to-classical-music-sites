@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>古典导聆不全书 | 科尔·德·格鲁特</title><meta name="description" content="科尔·德·格鲁特 的相关版本与出现记录。"><link rel="icon" href="/introduction-to-classical-music-sites/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/introduction-to-classical-music-sites/favicon.svg"><link rel="shortcut icon" href="/introduction-to-classical-music-sites/favicon.ico"><link rel="stylesheet" href="/introduction-to-classical-music-sites/_astro/about.Zfhg6SaR.css"></head> <body> <header class="site-header"> <div class="container site-header__inner"> <div class="site-header__spacer" aria-hidden="true"></div> <nav class="site-nav" aria-label="主导航"> <a href="/introduction-to-classical-music-sites/">首页</a><a href="/introduction-to-classical-music-sites/composers/">作曲家</a><a href="/introduction-to-classical-music-sites/conductors/">指挥</a><a href="/introduction-to-classical-music-sites/search/">搜索</a><a href="/introduction-to-classical-music-sites/about/">关于</a> </nav> <div class="site-search-shell" data-site-search> <button class="site-search__toggle" type="button" aria-label="打开搜索" aria-expanded="false"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M10.5 4.5a6 6 0 1 0 0 12a6 6 0 0 0 0-12Zm0-1.5a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15Zm6.1 12.54l4.43 4.42l-1.06 1.06l-4.42-4.43z"></path> </svg> </button> <form action="/introduction-to-classical-music-sites/search/" class="site-search" role="search"> <label class="sr-only" for="global-search">搜索</label> <input id="global-search" name="q" type="search" placeholder="搜索作曲家、指挥、乐团、类型、作品"> </form> </div> </div> </header> <script>
+  const searchShell = document.querySelector("[data-site-search]");
+  const toggle = searchShell?.querySelector(".site-search__toggle");
+  const input = searchShell?.querySelector("input");
+
+  toggle?.addEventListener("click", () => {
+    const nextState = !searchShell.classList.contains("is-open");
+    searchShell.classList.toggle("is-open", nextState);
+    toggle.setAttribute("aria-expanded", nextState ? "true" : "false");
+    if (nextState && input instanceof HTMLInputElement) {
+      input.focus();
+    }
+  });
+
+  input?.addEventListener("blur", () => {
+    if (input instanceof HTMLInputElement && !input.value.trim()) {
+      searchShell?.classList.remove("is-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script> <main class="page-shell">  <div class="container page-section"> <div class="section-heading"> <p class="section-heading__eyebrow">Performer</p> <h1>科尔·德·格鲁特</h1> </div>  <p class="page-note">Cor de Groot</p> <p class="page-note">角色：soloist</p> <div class="expandable-summary" data-expandable-summary style="--expandable-summary-lines:8;"><p class="expandable-summary__content body-copy" data-expandable-summary-content>科尔·德·格鲁特（Cor de Groot，1914 年 7 月 7 日 - 1993 年 5 月 26 日）是荷兰钢琴家和作曲家。
+
+他出生于阿姆斯特丹。他师从埃格伯特·维恩和乌尔弗茨·舒尔茨学习钢琴，并在塞姆·德累斯顿师从作曲和指挥。1932年，他以最高荣誉毕业，演奏了一首自己创作的钢琴协奏曲。在成为音乐厅管弦乐团的独奏家后，他在 1936 年维也纳国际钢琴家比赛中获得五等奖。他在世界各地演奏，现有的唱片展示了强烈的结构感、干净的节奏起音和非常精确的动态阴影。1956 年，他是伊丽莎白女王音乐比赛的评审团成员。
+
+1959 年，他的右手出现了神经紊乱，但他继续演奏左手曲目。他为左手安排了80多件;他的《幻影，voor piano》（linkerhand alleen）（1961 年）被一位评论家描述为“强烈而富有表现力的钢琴音乐，应该让钢琴家发展左手成为一种乐趣”。慢慢地，他恢复了右手的力量。他成为荷兰广播基金会的音乐总监，推广荷兰当代音乐。他录制了许多唱片，但也继续作曲。他的作品包括钢琴独奏音乐，如《想象变奏曲》（1967）;管弦乐;声乐工作;以及室内乐，如双簧管和钢琴田园奏鸣曲（1961 年）。据说荷兰作曲家杰拉德·舒尔曼为德·格鲁特创作了他的《巴加特莱》（1945 年），但事实并非如此。他于 1993 年在阿姆斯特丹去世。</p><div class="expandable-summary__tail" data-expandable-summary-tail><button type="button" class="expandable-summary__toggle expandable-summary__toggle--inline" data-expandable-summary-toggle data-expand-label="展开" data-collapse-label="折叠" aria-expanded="false">
+展开
+</button></div></div><script>
+  const expandableSummaries = document.querySelectorAll("[data-expandable-summary]");
+
+  expandableSummaries.forEach((container) => {
+    const content = container.querySelector("[data-expandable-summary-content]");
+    const toggle = container.querySelector("[data-expandable-summary-toggle]");
+    const tail = container.querySelector("[data-expandable-summary-tail]");
+
+    if (!content || !toggle || !tail) {
+      return;
+    }
+
+    const updateVisibility = () => {
+      const collapsed = !container.classList.contains("is-expanded");
+      const overflowing = content.scrollHeight > content.clientHeight + 2;
+      tail.hidden = !overflowing && collapsed;
+    };
+
+    toggle.addEventListener("click", () => {
+      const expanded = container.classList.toggle("is-expanded");
+      toggle.textContent = expanded ? toggle.dataset.collapseLabel || "折叠" : toggle.dataset.expandLabel || "展开";
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+      if (!expanded) {
+        requestAnimationFrame(updateVisibility);
+      }
+    });
+
+    requestAnimationFrame(updateVisibility);
+    window.addEventListener("resize", updateVisibility, { passive: true });
+  });
+</script>  <div class="section-divider"></div> <section class="section-stack section-stack--tight"> <article class="line-entry"> <h2><a href="/introduction-to-classical-music-sites/recordings/recording-第二十三号奏鸣曲-热情-科尔德格鲁特/">科尔·德·格鲁特</a></h2> <p class="list-card__subtitle">路德维希·凡·贝多芬 / 第二十三号奏鸣曲，热情</p> </article> </section> </div>  </main> <footer class="site-footer"> <div class="container site-footer__inner"> <div> <strong>古典导聆不全书</strong> <p>本站仅提供导聆说明与外部资源链接，不存储录音录像文件；相关内容版权归原权利人所有。</p> </div> <div> <span>联系方式</span> <p>QQ 439183718(群) 247996796(管理员)</p> </div> </div> </footer> <script>
+      document.addEventListener("click", async (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-local-resource-link="true"]') : null;
+        if (!(trigger instanceof HTMLAnchorElement)) {
+          return;
+        }
+        event.preventDefault();
+        try {
+          const response = await fetch(trigger.href, {
+            method: "GET",
+            credentials: "same-origin",
+          });
+          if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || `Failed to open local resource (${response.status})`);
+          }
+        } catch (error) {
+          window.alert(error instanceof Error ? error.message : String(error));
+        }
+      });
+    </script> </body> </html>
