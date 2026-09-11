@@ -5,6 +5,7 @@ desktop.ini
 tmp/
 logs/
 out/
+.staging/
 
 *.log
 *.tmp

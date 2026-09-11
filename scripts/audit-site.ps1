@@ -1,14 +1,19 @@
 param(
-  [string]$Version = "v0.1.0"
+  [string]$Version = "v0.1.0",
+  [string]$SiteDir = ""
 )
 
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$siteRoot = Join-Path $repoRoot "site\$Version"
+$siteRoot = if ([string]::IsNullOrWhiteSpace($SiteDir)) {
+  Join-Path $repoRoot "site\$Version"
+} else {
+  [System.IO.Path]::GetFullPath($SiteDir)
+}
 $logDir = Join-Path $repoRoot "logs"
 
-if (-not (Test-Path $siteRoot)) {
+if (-not (Test-Path -LiteralPath $siteRoot -PathType Container)) {
   throw "Site directory not found: $siteRoot"
 }
 

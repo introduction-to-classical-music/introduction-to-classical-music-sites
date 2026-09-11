@@ -59,6 +59,12 @@ https://introduction-to-classical-music.github.io/introduction-to-classical-musi
 powershell -ExecutionPolicy Bypass -File .\scripts\stage-site.ps1 -Version v0.1.0 -SourceSitesRoot <site-source-root>
 ```
 
+也可以直接传入已经构建好的站点目录：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\stage-site.ps1 -Version v0.1.0 -SourceSiteDir <built-site-dir>
+```
+
 审计某个版本是否适合公网发布：
 
 ```powershell
@@ -81,6 +87,13 @@ powershell -ExecutionPolicy Bypass -File .\scripts\publish-oss.ps1 -Version v0.1
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\refresh-cdn.ps1 -Domain your-domain.example -Paths https://your-domain.example/index.html,https://your-domain.example/sitemap.xml
+```
+
+Pages 发布默认只预览差异；确认后才传入 `-Publish`：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\publish-pages.ps1 -Version v0.1.0 -SourceSiteDir <pages-site-dir>
+powershell -ExecutionPolicy Bypass -File .\scripts\publish-pages.ps1 -Version v0.1.0 -SourceSiteDir <pages-site-dir> -Publish
 ```
 
 ## 阿里云推荐方案
