@@ -10,7 +10,7 @@ if ([string]::IsNullOrWhiteSpace($SourceSiteDir) -and [string]::IsNullOrWhiteSpa
   if (-not [string]::IsNullOrWhiteSpace($env:ICM_SITE_SOURCE_ROOT)) {
     $SourceSitesRoot = $env:ICM_SITE_SOURCE_ROOT
   } else {
-    throw "请通过 -SourceSitesRoot 或环境变量 ICM_SITE_SOURCE_ROOT 提供站点来源根目录。"
+    throw "Pass -SourceSitesRoot or ICM_SITE_SOURCE_ROOT with the site source root."
   }
 }
 
@@ -25,11 +25,11 @@ $targetCurrentDir = Join-Path $repoRoot "site\\current"
 $stagingRoot = Join-Path $repoRoot "site\\.staging\\$Version-$([guid]::NewGuid().ToString('N'))"
 
 if (-not (Test-Path -LiteralPath $sourceDir -PathType Container)) {
-  throw "源站点目录不存在：$sourceDir"
+  throw "Source site directory does not exist: $sourceDir"
 }
 
 if (-not (Test-Path -LiteralPath (Join-Path $sourceDir "index.html") -PathType Leaf)) {
-  throw "源站点缺少 index.html：$sourceDir"
+  throw "Source site is missing index.html: $sourceDir"
 }
 
 try {
@@ -65,4 +65,4 @@ try {
   }
 }
 
-Write-Host "已同步站点版本：$Version"
+Write-Host "Staged site version: $Version"
