@@ -19,23 +19,71 @@
     }
   });
 </script> <main class="page-shell">  <div class="container page-section page-section--plain"> <div class="section-heading section-heading--page-intro"> <p class="section-heading__eyebrow">About</p> <h1>关于本站</h1> <p class="page-lead">一个持续更新的古典音乐目录站点，按作曲家、作品类型与人物索引整理版本推荐，帮助乐迷更高效地找到值得聆听的录音与录像。</p> </div> <div class="section-divider"></div> <section class="about-stats"> <h2>收录概况</h2> <dl class="stats-list"> <div> <dt>作曲家</dt> <dd>8</dd> </div><div> <dt>作品</dt> <dd>16</dd> </div><div> <dt>推荐版本</dt> <dd>206</dd> </div><div> <dt>指挥</dt> <dd>85</dd> </div><div> <dt>乐团</dt> <dd>66</dd> </div> </dl> <p class="page-note">最近导入：2026-03-07</p> </section> <div class="section-divider"></div> <div class="section-stack section-stack--tight"> <p class="body-copy">古典导聆不全书是一个面向古典音乐爱好者的公益目录项目。站点以作曲家、作品类型、作品与人物索引为主轴，持续整理值得聆听的推荐版本，并保留必要的演出、专辑与资源信息。</p><p class="body-copy">站内所有条目均来自长期的音乐交流、聆听记录与沙龙讨论总结。推荐并非权威定论，而是为了帮助使用者更快建立版本坐标，在不断扩充的目录中找到清晰的聆听路径。</p><p class="body-copy">如果你发现资料错误、链接失效，或希望提供勘误与建议，欢迎通过下方联系方式与站点维护者联系。</p> <section class="line-entry"> <h2>联系方式</h2> <p>联系方式：QQ 439183718(群) 247996796(管理员)</p> </section> </div> </div>  </main> <footer class="site-footer"> <div class="container site-footer__inner"> <div> <strong>古典导聆不全书</strong> <p>本站仅提供导聆说明与外部资源链接，不存储录音录像文件；相关内容版权归原权利人所有。</p> </div> <div> <span>联系方式</span> <p>QQ 439183718(群) 247996796(管理员)</p> </div> </div> </footer> <script>
-      document.addEventListener("click", async (event) => {
-        const trigger = event.target instanceof Element ? event.target.closest('[data-local-resource-link="true"]') : null;
-        if (!(trigger instanceof HTMLAnchorElement)) {
-          return;
-        }
-        event.preventDefault();
-        try {
-          const response = await fetch(trigger.href, {
-            method: "GET",
-            credentials: "same-origin",
-          });
-          if (!response.ok) {
-            const message = await response.text();
-            throw new Error(message || `Failed to open local resource (${response.status})`);
+      // Local resource links are opened through the Electron preload bridge
+      // (`desktop:open-local-resource`, validated in the main process). The old
+      // same-origin local-resource GET endpoint has been removed, so a plain
+      // browser only gets an explicit "desktop app" hint.
+      (() => {
+        let hintTimer = 0;
+
+        function showLocalResourceHint(message) {
+          let hint = document.getElementById("local-resource-hint");
+          if (!hint) {
+            hint = document.createElement("div");
+            hint.id = "local-resource-hint";
+            hint.setAttribute("role", "status");
+            hint.style.cssText =
+              "position:fixed;left:50%;bottom:24px;transform:translateX(-50%);max-width:min(560px,90vw);" +
+              "background:#2f2a24;color:#f7efe2;padding:10px 16px;border-radius:8px;z-index:9999;" +
+              "font:14px/1.6 system-ui,-apple-system,'Segoe UI',sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.28);";
+            document.body.appendChild(hint);
           }
-        } catch (error) {
-          window.alert(error instanceof Error ? error.message : String(error));
+          hint.textContent = message;
+          window.clearTimeout(hintTimer);
+          hintTimer = window.setTimeout(() => hint.remove(), 6000);
         }
-      });
+
+        async function openLocalResource(trigger) {
+          const target = trigger.getAttribute("data-local-resource-path") || "";
+          const bridge = window.desktopLauncher;
+          if (!bridge || typeof bridge.openLocalResource !== "function") {
+            showLocalResourceHint("该链接指向本地文件，仅可在「不全书」桌面应用中打开。");
+            return;
+          }
+          try {
+            await bridge.openLocalResource(target);
+          } catch (error) {
+            showLocalResourceHint(
+              `无法打开本地文件：${error instanceof Error ? error.message : String(error)}`,
+            );
+          }
+        }
+
+        function findLocalResourceTrigger(event) {
+          const element = event.target instanceof Element ? event.target : null;
+          const trigger = element ? element.closest('[data-local-resource-link="true"]') : null;
+          return trigger instanceof HTMLElement ? trigger : null;
+        }
+
+        document.addEventListener("click", (event) => {
+          const trigger = findLocalResourceTrigger(event);
+          if (!trigger) {
+            return;
+          }
+          event.preventDefault();
+          void openLocalResource(trigger);
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key !== "Enter" && event.key !== " ") {
+            return;
+          }
+          const trigger = findLocalResourceTrigger(event);
+          if (!trigger) {
+            return;
+          }
+          event.preventDefault();
+          void openLocalResource(trigger);
+        });
+      })();
     </script> </body> </html>

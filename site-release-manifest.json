@@ -2,11 +2,11 @@
   "libraryId": "6a4528d0-9bef-4560-baeb-d15fe15c97e5",
   "libraryName": "Salon Library 官方资料库",
   "appVersion": "0.1.1",
-  "builtAt": "2026-11-17T12:07:10.248Z",
+  "builtAt": "2026-11-17T13:28:00.453Z",
   "siteBase": "/introduction-to-classical-music-sites/",
   "siteOutputMode": "public",
   "strippedLocalLinks": 0,
   "sourceLocalResourceLinks": 0,
-  "sourceDigest": "7e1a2316c4e4dc8fca4ff91a2fe2a483e27a942759d331f2a18165bae3591620",
-  "siteDigest": "17d0dfb7f839504d75dfc63b8cbdf318cff5ab5b8bd10d4fa643dc84d85ecb5f"
+  "sourceDigest": "cfa59423542c6df8089059c09a22275e4256a8398850bc6d5a3fc2378463b333",
+  "siteDigest": "7a63349259952ccf3ca4cd1e755a3ddb7b42ec75c4c2573d78957cfd64d2eb68"
 }
