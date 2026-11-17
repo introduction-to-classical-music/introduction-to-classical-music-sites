@@ -1,0 +1,33 @@
+name: site-release-check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  site-release-check:
+    name: Site metadata and audit checks
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Ensure ripgrep is available
+        shell: pwsh
+        run: |
+          if (-not (Get-Command rg -ErrorAction SilentlyContinue)) {
+            Write-Host "ripgrep is not preinstalled; installing it with Chocolatey"
+            choco install ripgrep -y --no-progress
+          }
+          rg --version
+
+      - name: Run site release regression tests
+        shell: pwsh
+        run: ./scripts/test-site-release.ps1
