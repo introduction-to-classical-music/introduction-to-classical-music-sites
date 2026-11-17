@@ -1,4 +1,8 @@
 {
-  "appVersion": "0.1.0",
-  "builtAt": "2026-04-24T17:31:43.948Z"
+  "appVersion": "0.1.1",
+  "buildSource": "export",
+  "siteOutputMode": "public",
+  "strippedLocalLinks": 0,
+  "siteBase": "/introduction-to-classical-music-sites/",
+  "builtAt": "2026-11-17T12:07:09.636Z"
 }
