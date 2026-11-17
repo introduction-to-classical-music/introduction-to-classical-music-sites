@@ -6,6 +6,8 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+. (Join-Path $PSScriptRoot "site-release-common.ps1")
+
 if ([string]::IsNullOrWhiteSpace($SourceSiteDir) -and [string]::IsNullOrWhiteSpace($SourceSitesRoot)) {
   if (-not [string]::IsNullOrWhiteSpace($env:ICM_SITE_SOURCE_ROOT)) {
     $SourceSitesRoot = $env:ICM_SITE_SOURCE_ROOT
@@ -40,7 +42,7 @@ try {
 
   $manifestPath = Join-Path $stagingRoot "site-release-manifest.json"
   if (Test-Path -LiteralPath $manifestPath -PathType Leaf) {
-    $manifest = Get-Content -Raw -LiteralPath $manifestPath | ConvertFrom-Json
+    $manifest = Read-SiteReleaseTextFile -Path $manifestPath | ConvertFrom-Json
   } else {
     $manifest = [ordered]@{
       appVersion = ""

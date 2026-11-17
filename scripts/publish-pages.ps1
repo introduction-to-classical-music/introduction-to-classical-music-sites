@@ -6,6 +6,8 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+. (Join-Path $PSScriptRoot "site-release-common.ps1")
+
 if ([string]::IsNullOrWhiteSpace($SourceSiteDir)) {
   throw "Pass -SourceSiteDir with a built Pages site directory."
 }
@@ -24,7 +26,7 @@ if (-not (Test-Path -LiteralPath (Join-Path $sourceDir "index.html") -PathType L
 if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
   throw "Source site is missing site-release-manifest.json: $sourceDir"
 }
-$manifest = Get-Content -Raw -LiteralPath $manifestPath | ConvertFrom-Json
+$manifest = Read-SiteReleaseTextFile -Path $manifestPath | ConvertFrom-Json
 if ([string]$manifest.siteBase -ne $expectedBase) {
   throw "Invalid Pages site base. Expected $expectedBase, got $($manifest.siteBase)"
 }

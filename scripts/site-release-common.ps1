@@ -140,6 +140,19 @@ function ConvertTo-BaseUrlInfo {
   return $info
 }
 
+function Read-SiteReleaseTextFile {
+  param(
+    [Parameter(Mandatory = $true)]
+    [string]$Path
+  )
+
+  # Windows PowerShell 5.1 decodes BOM-less files with the ANSI code page when
+  # Get-Content is used, which corrupts UTF-8 manifests/sitemaps written by
+  # Node.js (non-ASCII libraryName breaks ConvertFrom-Json). Always read as
+  # UTF-8 so Windows PowerShell 5.1 and PowerShell 7 behave identically.
+  return [System.IO.File]::ReadAllText($Path, [System.Text.Encoding]::UTF8)
+}
+
 function Get-SiteHtmlPageFiles {
   param(
     [string]$SiteRoot

@@ -141,6 +141,29 @@ function Invoke-SiteScript {
   }
 }
 
+function Invoke-GitCommand {
+  param(
+    [string]$RepoPath,
+    [string[]]$Arguments = @()
+  )
+
+  # Native git stderr must not become a terminating error while
+  # $ErrorActionPreference is "Stop"; capture it and surface it on failure.
+  $previousErrorActionPreference = $ErrorActionPreference
+  $ErrorActionPreference = "Continue"
+  try {
+    $output = & git -C $RepoPath @Arguments 2>&1
+    $exitCode = $LASTEXITCODE
+  } finally {
+    $ErrorActionPreference = $previousErrorActionPreference
+  }
+  $text = (@($output) | ForEach-Object { [string]$_ }) -join "`n"
+  if ($exitCode -ne 0) {
+    throw "git -C $RepoPath $($Arguments -join ' ') failed (exit $exitCode): $text"
+  }
+  return $text
+}
+
 function New-FixtureSite {
   param(
     [string]$Name,
@@ -164,20 +187,21 @@ function Write-TestManifest {
   param(
     [string]$SitePath,
     [string]$SiteBase,
-    [string]$AppVersion = "0.1.1"
+    [string]$AppVersion = "0.1.1",
+    [string]$LibraryName = "Test Library"
   )
 
-  $manifest = [ordered]@{
-    libraryId = "test-library"
-    libraryName = "Test Library"
-    appVersion = $AppVersion
-    builtAt = "2026-01-01T00:00:00.000Z"
-    siteBase = $SiteBase
-    sourceDigest = ("0" * 64)
-    siteDigest = ("0" * 64)
-  }
   $manifestPath = Join-Path $SitePath "site-release-manifest.json"
-  $manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $manifestPath -Encoding utf8
+  # Build the JSON by hand so the non-ASCII libraryName is stored as raw UTF-8
+  # bytes (Node.js JSON.stringify behavior). ConvertTo-Json would escape it to
+  # \uXXXX, which would hide the Windows PowerShell 5.1 ANSI decoding bug.
+  $digest = ("0" * 64)
+  $safeLibraryName = $LibraryName.Replace('\', '\\').Replace('"', '\"')
+  $json = '{"libraryId":"test-library","libraryName":"' + $safeLibraryName + '","appVersion":"' + $AppVersion + '","builtAt":"2026-01-01T00:00:00.000Z","siteBase":"' + $SiteBase + '","sourceDigest":"' + $digest + '","siteDigest":"' + $digest + '"}'
+  # Export manifests are UTF-8 without BOM (written by Node.js); reproduce that
+  # shape so Windows PowerShell 5.1 encoding regressions are covered.
+  $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+  [System.IO.File]::WriteAllText($manifestPath, ($json + "`n"), $utf8NoBom)
 }
 
 function Invoke-WriteStaticMetadata {
@@ -510,10 +534,83 @@ try {
   Assert-Contains -Text $fakeCalls -Pattern "cp" -Name "publish-oss invoked ossutil cp through the audit gate"
 
   # -------------------------------------------------------------------------
-  # 7. repository site artifacts are untouched by the tests
+  # 7. UTF-8 without BOM manifests with non-ASCII content (PowerShell 5.1)
   # -------------------------------------------------------------------------
   Write-Host ""
-  Write-Host "Section 7: repository safety"
+  Write-Host "Section 7: UTF-8 without BOM manifest (PowerShell 5.1 encoding regression)"
+  $utf8Site = New-PreparedSite -Name "utf8-manifest-site"
+  # "Salon Library " + five CJK characters ("official library") encoded as UTF-8
+  # bytes; keeping the script itself ASCII-only so Windows PowerShell 5.1 parses
+  # it correctly.
+  $utf8LibraryName = "Salon Library " + [System.Text.Encoding]::UTF8.GetString([byte[]](0xE5, 0xAE, 0x98, 0xE6, 0x96, 0xB9, 0xE8, 0xB5, 0x84, 0xE6, 0x96, 0x99, 0xE5, 0xBA, 0x93))
+  Write-TestManifest -SitePath $utf8Site -SiteBase $pagesBasePath -LibraryName $utf8LibraryName
+  $utf8ManifestPath = Join-Path $utf8Site "site-release-manifest.json"
+  $manifestBytes = [System.IO.File]::ReadAllBytes($utf8ManifestPath)
+  $hasBom = ($manifestBytes.Length -ge 3) -and ($manifestBytes[0] -eq 0xEF) -and ($manifestBytes[1] -eq 0xBB) -and ($manifestBytes[2] -eq 0xBF)
+  Assert-Test (-not $hasBom) "regression manifest is UTF-8 without BOM"
+  $manifestHasMultiByteBytes = @($manifestBytes | Where-Object { $_ -gt 0x7F }).Count -gt 0
+  Assert-Test $manifestHasMultiByteBytes "regression manifest stores the non-ASCII libraryName as raw UTF-8 bytes"
+  $utf8ManifestText = [System.IO.File]::ReadAllText($utf8ManifestPath, [System.Text.Encoding]::UTF8)
+  Assert-Test ($utf8ManifestText.Contains($utf8LibraryName)) "regression manifest text preserves the non-ASCII libraryName"
+
+  $utf8Audit = Invoke-SiteAudit -SitePath $utf8Site
+  Assert-Test ($utf8Audit.ExitCode -eq 0) "audit-site parses a UTF-8 without BOM manifest (Windows PowerShell 5.1)"
+  Assert-Contains -Text $utf8Audit.Output -Pattern "Site audit passed" -Name "UTF-8 manifest audit reports success"
+  $utf8AuditNoBase = Invoke-SiteAudit -SitePath $utf8Site -BaseUrl ""
+  Assert-Test ($utf8AuditNoBase.ExitCode -eq 0) "audit-site compares UTF-8 manifest siteBase when -BaseUrl is omitted"
+
+  # publish-pages/publish preview must not fail on the same manifest. Run it
+  # against an isolated throwaway git repository so the real site-deploy repo
+  # (and its origin/pages worktree) is never touched by the test.
+  $publishRepo = Join-Path $tempRoot "publish-preview-repo"
+  New-Item -ItemType Directory -Force -Path $publishRepo | Out-Null
+  Invoke-GitCommand -RepoPath $publishRepo -Arguments @("init", "--quiet") | Out-Null
+  Invoke-GitCommand -RepoPath $publishRepo -Arguments @("config", "user.name", "Site Release Test") | Out-Null
+  Invoke-GitCommand -RepoPath $publishRepo -Arguments @("config", "user.email", "site-release-test@example.invalid") | Out-Null
+  Set-Content -LiteralPath (Join-Path $publishRepo "index.html") -Value "<!doctype html><html><body>seed pages</body></html>" -Encoding ascii
+  Invoke-GitCommand -RepoPath $publishRepo -Arguments @("add", "-A") | Out-Null
+  Invoke-GitCommand -RepoPath $publishRepo -Arguments @("commit", "--quiet", "-m", "seed pages") | Out-Null
+  Invoke-GitCommand -RepoPath $publishRepo -Arguments @("update-ref", "refs/remotes/origin/pages", "HEAD") | Out-Null
+  $seedHead = (Invoke-GitCommand -RepoPath $publishRepo -Arguments @("rev-parse", "HEAD")).Trim()
+
+  $publishReposcripts = Join-Path $publishRepo "scripts"
+  New-Item -ItemType Directory -Force -Path $publishReposcripts | Out-Null
+  foreach ($scriptName in @("publish-pages.ps1", "audit-site.ps1", "stage-site.ps1", "site-release-common.ps1")) {
+    Copy-Item -LiteralPath (Join-Path $scriptsDir $scriptName) -Destination (Join-Path $publishReposcripts $scriptName) -Force
+  }
+  $childTempRoot = Join-Path $tempRoot "child-temp"
+  New-Item -ItemType Directory -Force -Path $childTempRoot | Out-Null
+  $utf8Environment = @{ ICM_AUDIT_LOG_DIR = $logRoot; TEMP = $childTempRoot; TMP = $childTempRoot }
+
+  $previewResult = Invoke-SiteScript -ScriptPath (Join-Path $publishReposcripts "publish-pages.ps1") -Arguments @("-Version", "vtest", "-SourceSiteDir", $utf8Site) -Environment $utf8Environment
+  Assert-Test ($previewResult.ExitCode -eq 0) "publish-pages preview accepts a UTF-8 without BOM manifest"
+  Assert-Contains -Text $previewResult.Output -Pattern "Preview only" -Name "publish-pages preview stops before committing and pushing"
+  $headAfterPreview = (Invoke-GitCommand -RepoPath $publishRepo -Arguments @("rev-parse", "HEAD")).Trim()
+  Assert-Test ($headAfterPreview -eq $seedHead) "publish-pages preview does not create a commit"
+  $worktreeLines = @((Invoke-GitCommand -RepoPath $publishRepo -Arguments @("worktree", "list")) -split "`n" | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
+  Assert-Test ($worktreeLines.Count -eq 1) "publish-pages preview removes its temporary worktree"
+
+  $stageResult = Invoke-SiteScript -ScriptPath (Join-Path $publishReposcripts "stage-site.ps1") -Arguments @("-Version", "vtest", "-SourceSiteDir", $utf8Site) -Environment $utf8Environment
+  Assert-Test ($stageResult.ExitCode -eq 0) "stage-site accepts a UTF-8 without BOM manifest"
+  $stagedManifestPath = Join-Path $publishRepo "site\vtest\site-release-manifest.json"
+  Assert-Test (Test-Path -LiteralPath $stagedManifestPath -PathType Leaf) "stage-site writes the archived manifest"
+  $stagedManifest = $null
+  $stagedParsed = $false
+  try {
+    $stagedManifest = [System.IO.File]::ReadAllText($stagedManifestPath, [System.Text.Encoding]::UTF8) | ConvertFrom-Json
+    $stagedParsed = $true
+  } catch {
+    $stagedParsed = $false
+  }
+  Assert-Test $stagedParsed "stage-site archived manifest is valid JSON"
+  Assert-Test ($stagedParsed -and ([string]$stagedManifest.libraryName -eq $utf8LibraryName)) "stage-site preserves the non-ASCII libraryName"
+  Assert-Test ($stagedParsed -and ([string]$stagedManifest.archivedVersion -eq "vtest")) "stage-site records the archived version"
+
+  # -------------------------------------------------------------------------
+  # 8. repository site artifacts are untouched by the tests
+  # -------------------------------------------------------------------------
+  Write-Host ""
+  Write-Host "Section 8: repository safety"
   $repoSitemapHashAfter = Get-FileSha256 $repoSitemapPath
   Assert-Test ($repoSitemapHashBefore -eq $repoSitemapHashAfter) "tests do not modify repository site/ artifacts"
 

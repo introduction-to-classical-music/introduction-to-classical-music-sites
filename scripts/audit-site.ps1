@@ -156,7 +156,7 @@ if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
   $manifest = $null
   $manifestParsed = $false
   try {
-    $manifest = Get-Content -Raw -LiteralPath $manifestPath | ConvertFrom-Json
+    $manifest = Read-SiteReleaseTextFile -Path $manifestPath | ConvertFrom-Json
     $manifestParsed = $true
   } catch {
     Add-AuditFailure "site-release-manifest.json is not valid JSON: $($_.Exception.Message)"
@@ -198,7 +198,10 @@ $scanPatterns = @(
   "(^|[^A-Za-z0-9])[A-Za-z]:[\\/]"
 )
 foreach ($pattern in $scanPatterns) {
-  $scanOutput = @(& $rgCommand.Source -n --no-heading --color never --glob "*" -e $pattern $siteRoot 2>&1)
+  # Worktrees created by publish-pages contain a ".git" pointer file whose
+  # "gitdir:" line is a drive-letter absolute path; exclude git metadata from
+  # the content scan so it is not reported as a local path leak.
+  $scanOutput = @(& $rgCommand.Source -n --no-heading --color never --glob "*" --glob "!.git" --glob "!**/.git" --glob "!**/.git/**" -e $pattern $siteRoot 2>&1)
   $scanExitCode = $LASTEXITCODE
   if ($scanExitCode -eq 0) {
     foreach ($line in $scanOutput) {
@@ -220,7 +223,7 @@ if (-not $SkipStaticMetadata) {
   if (-not (Test-Path -LiteralPath $sitemapPath -PathType Leaf)) {
     Add-AuditFailure "sitemap.xml is missing: $sitemapPath"
   } else {
-    $sitemapText = Get-Content -Raw -LiteralPath $sitemapPath
+    $sitemapText = Read-SiteReleaseTextFile -Path $sitemapPath
     if ($sitemapText.Contains("System.Object[]")) {
       Add-AuditFailure "sitemap.xml contains System.Object[] (array join bug)."
     }
@@ -261,7 +264,7 @@ if (-not $SkipStaticMetadata) {
   if (-not (Test-Path -LiteralPath $robotsPath -PathType Leaf)) {
     Add-AuditFailure "robots.txt is missing: $robotsPath"
   } else {
-    $robotsText = Get-Content -Raw -LiteralPath $robotsPath
+    $robotsText = Read-SiteReleaseTextFile -Path $robotsPath
     $sitemapUrls = New-Object System.Collections.Generic.List[string]
     foreach ($line in ($robotsText -split "`r?`n")) {
       if ($line -match '^\s*Sitemap\s*:\s*(\S+)\s*$') {
