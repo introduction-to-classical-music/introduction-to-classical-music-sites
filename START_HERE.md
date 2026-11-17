@@ -46,7 +46,7 @@
 
 ## 推荐接手顺序
 
-1. 阅读最新发布记录 [docs/releases/2026-11-17-v0.1.1-pages-w10.md](docs/releases/2026-11-17-v0.1.1-pages-w10.md) 与摘要语义 [docs/site-release-digest.md](docs/site-release-digest.md)
+1. 阅读最新发布记录 [docs/releases/2026-11-17-v0.1.1-pages-w10.md](docs/releases/2026-11-17-v0.1.1-pages-w10.md) 与摘要语义 [docs/site-release-digest.md](docs/site-release-digest.md)；Windows 本地操作前先阅读 [Windows 长路径说明](docs/windows-long-paths.md) 并配置 `core.longpaths=true`
 2. 阅读 [README.md](README.md)
 3. 阅读 [docs/alicloud-oss-cdn-plan.md](docs/alicloud-oss-cdn-plan.md)
 4. 先运行发布脚本回归测试，确认本机环境正常：
@@ -81,6 +81,8 @@
 - Pages 发布必须经 root/用户批准后以 **fast-forward** 方式推送 `pages`，并在发布后验证 build 与线上抽样；回滚步骤见最新发布记录
 - Pages 根目录的 `site-release-manifest.json` / `.icm-build-meta.json` 是公开 provenance 文件（仅库 id/名称/版本/digest），发布前确认无敏感信息
 - `sourceDigest` 已含 W10a EOL 规范化（CRLF/LF 可复算）；`siteDigest` 仍受 `.icm-build-meta.json` 的 `builtAt` 影响，只对当次产物有效；语义见 [docs/site-release-digest.md](docs/site-release-digest.md)
+- Windows 维护者 clone 后需配置 `core.longpaths=true`（仓库本地配置不随 clone 传播）；最长路径、校验命令与资产改名计划见 [docs/windows-long-paths.md](docs/windows-long-paths.md)
+- 提交 PR 请使用 [.github/pull_request_template.md](.github/pull_request_template.md) 的检查清单（审计/manifest/digest/base 链接/无密钥/回滚等）
 
 ## 建议验收点
 

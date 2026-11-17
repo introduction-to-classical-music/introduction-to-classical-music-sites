@@ -27,6 +27,8 @@ https://introduction-to-classical-music.github.io/introduction-to-classical-musi
   历史发布记录（`e498eb3`，provenance-only，已被取代）
 - [docs/site-release-digest.md](docs/site-release-digest.md)
   `sourceDigest`/`siteDigest` 语义、EOL 规范化与复算方法
+- [docs/windows-long-paths.md](docs/windows-long-paths.md)
+  Windows 长路径说明（`core.longpaths`、路径长度校验、资产改名计划）
 
 ## 当前发布状态（2026-11-17）
 
@@ -59,11 +61,11 @@ https://introduction-to-classical-music.github.io/introduction-to-classical-musi
 - `site/v0.1.0`
   按版本归档的站点副本
 - `docs/`
-  互联网部署说明、阿里云方案、回滚说明、[发布记录](docs/releases/)，以及 [摘要语义文档](docs/site-release-digest.md)
+  互联网部署说明、阿里云方案、回滚说明、[发布记录](docs/releases/)、[摘要语义文档](docs/site-release-digest.md)，以及 [Windows 长路径说明](docs/windows-long-paths.md)
 - `scripts/`
   站点同步、上线前审计、静态元文件生成、`OSS` 上传、`CDN` 刷新脚本，以及发布脚本回归测试
-- `.github/workflows/`
-  `site-release-check.yml`：在 `windows-latest` 上运行发布脚本回归测试
+- `.github/`
+  `workflows/site-release-check.yml`：在 `windows-latest` 上运行发布脚本回归测试；`pull_request_template.md`：PR 检查清单（审计/manifest/密钥/回滚等）
 - `config/`
   部署配置模板
 
@@ -161,4 +163,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\test-site-release.ps1
 - GitHub Pages 只发布 `pages` 分支；正式域名根站点、`site/current` 与 OSS/CDN 待 D6 正式域名决议后另行发布
 - 每次 Pages/根站点发布后，必须按发布记录中的步骤验证 Pages build 状态、线上抽样与回滚可用性
 - `sourceDigest` 已含 W10a EOL 规范化（CRLF/LF 可复算）；`siteDigest` 仍受 `.icm-build-meta.json` 的 `builtAt` 影响，只对当次产物有效——语义与复算方法见 [docs/site-release-digest.md](docs/site-release-digest.md)
+- Windows 上 clone 本仓库后必须配置 `core.longpaths=true`（仓库本地配置不会随 clone 传播）；最长路径/校验与资产改名计划见 [docs/windows-long-paths.md](docs/windows-long-paths.md)
 - 如果未来改成子路径部署，而不是域名根目录部署，需要额外补 `base path（基础路径）` 支持
