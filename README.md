@@ -4,7 +4,7 @@
 
 https://introduction-to-classical-music.github.io/introduction-to-classical-music-sites/
 
-2026-11-17：GitHub Pages 站点已更新到 0.1.1（provenance 更新，用户可见内容不变）。发布记录见 [docs/releases/2026-11-17-v0.1.1-pages.md](docs/releases/2026-11-17-v0.1.1-pages.md)。
+2026-11-17：GitHub Pages 0.1.1 已完成两次更新，当前线上为 **W10c `c6e42a4`**（W10b 内部链接 base 修复 149 页/607 处、W10a 规范化 `sourceDigest`、W3 本地资源 bridge 惰性脚本、45 张 legacy 图核验）。发布记录见 [docs/releases/2026-11-17-v0.1.1-pages-w10.md](docs/releases/2026-11-17-v0.1.1-pages-w10.md)（此前 `e498eb3` 的 provenance-only 记录已作为历史保留）。
 
 这个仓库只负责两件事：
 
@@ -21,20 +21,26 @@ https://introduction-to-classical-music.github.io/introduction-to-classical-musi
   阿里云 `OSS + CDN` 主方案
 - [docs/release-workflow.md](docs/release-workflow.md)
   站点更新、审计、上传与回滚流程
+- [docs/releases/2026-11-17-v0.1.1-pages-w10.md](docs/releases/2026-11-17-v0.1.1-pages-w10.md)
+  最新一次 Pages 发布记录（`c6e42a4`：链接/digest/legacy 图/验证/回滚）
 - [docs/releases/2026-11-17-v0.1.1-pages.md](docs/releases/2026-11-17-v0.1.1-pages.md)
-  最新一次 Pages 0.1.1 发布记录（含 manifest、验证、已知限制与回滚）
+  历史发布记录（`e498eb3`，provenance-only，已被取代）
+- [docs/site-release-digest.md](docs/site-release-digest.md)
+  `sourceDigest`/`siteDigest` 语义、EOL 规范化与复算方法
 
 ## 当前发布状态（2026-11-17）
 
-- **GitHub Pages 0.1.1 已发布并验证**：`pages` 分支提交 `e498eb316a6d36ce9756cc5aaa126ae65bedfc05`（父 `ec58b6b`），Pages build 状态 `built`，线上页面内容与上一版本一致；新增 `site-release-manifest.json`、更新 `.icm-build-meta.json`。
+- **GitHub Pages 0.1.1 已发布并验证（当前线上 `c6e42a4`）**：`pages` 分支提交 `c6e42a46e6176791260045d5054bc98e7b921f3e`（父 `e498eb3`），Pages build 状态 `built`（耗时约 37.7s）；产物 **462 HTML / 569 files**，新增 `_astro/SearchPanel…DP1T1OlE.js`，45 张 legacy 图片经真实文件核验。
   - 线上地址：https://introduction-to-classical-music.github.io/introduction-to-classical-music-sites/
-  - provenance 文件（公开可访问）：`/introduction-to-classical-music-sites/site-release-manifest.json`、`/introduction-to-classical-music-sites/.icm-build-meta.json`（内容仅库 id/名称/版本/digest，无敏感信息）
-  - 发布记录：[docs/releases/2026-11-17-v0.1.1-pages.md](docs/releases/2026-11-17-v0.1.1-pages.md)
+  - 关键变化：W10b 修复 149 页/607 处缺 Pages base 的内部链接（线上抽样 200）；W10a `sourceDigest=cfa59423…b333`（CRLF/LF 可复算，取代旧 `7e1a…`）；W3 本地资源 bridge 在普通浏览器中**惰性提示**、不访问本地资源。
+  - provenance 文件（公开可访问）：`/introduction-to-classical-music-sites/site-release-manifest.json`（`siteDigest=7a633492…eb68`，manifest SHA256 `1AB7D3D4…E0C`）、`/introduction-to-classical-music-sites/.icm-build-meta.json`
+  - 发布记录：[docs/releases/2026-11-17-v0.1.1-pages-w10.md](docs/releases/2026-11-17-v0.1.1-pages-w10.md)
 - **根站点（`site/v0.1.1`、`site/current`）仍等待正式域名**（D6-B）：未生成、未替换，`site/` 归档仍是旧产物；OSS/CDN 未执行。
-- 已知限制（后续工作项，详见发布记录）：
-  - **W10a**：`sourceDigest` 目前绑定 CRLF 工作树（官方库 `core.autocrlf=true` 且无 `.gitattributes`），LF checkout/CI 无法复算；W7a 前必须关闭。
-  - **W10b**：149 个实体页存在 607 处缺少 Pages base 的根绝对链接（既有缺陷，非本次发布引入）；修复后需重建 Pages 并抽样。
-  - **W10c**：站点仓库 EOL/长路径治理（later）。
+- 已知限制 / 后续：
+  - **W10a（已修复并随 `c6e42a4` 发布）**：`sourceDigest` 已按 W10a 规范化，跨 CRLF/LF 可复算；详见 [docs/site-release-digest.md](docs/site-release-digest.md)。
+  - **W10b（已修复并随 `c6e42a4` 发布）**：149 页/607 处内部链接已带 Pages base，线上抽样通过。
+  - **W10c（later）**：站点仓库 EOL/长路径治理（`.gitattributes`、从 blob 复算 digest、`core.longpaths` 说明）。
+  - `siteDigest` 仍为当次构建值（包含 `.icm-build-meta.json` 的 builtAt），不是跨构建稳定值。
 
 ## 仓库边界
 
@@ -53,7 +59,7 @@ https://introduction-to-classical-music.github.io/introduction-to-classical-musi
 - `site/v0.1.0`
   按版本归档的站点副本
 - `docs/`
-  互联网部署说明、阿里云方案、回滚说明，以及 [docs/releases/](docs/releases/) 发布记录
+  互联网部署说明、阿里云方案、回滚说明、[发布记录](docs/releases/)，以及 [摘要语义文档](docs/site-release-digest.md)
 - `scripts/`
   站点同步、上线前审计、静态元文件生成、`OSS` 上传、`CDN` 刷新脚本，以及发布脚本回归测试
 - `.github/workflows/`
@@ -154,4 +160,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\test-site-release.ps1
 - Pages 根目录的 `site-release-manifest.json` / `.icm-build-meta.json` 是**公开** provenance 文件，仅含库 id/名称/版本/digest；发布前确认无敏感信息
 - GitHub Pages 只发布 `pages` 分支；正式域名根站点、`site/current` 与 OSS/CDN 待 D6 正式域名决议后另行发布
 - 每次 Pages/根站点发布后，必须按发布记录中的步骤验证 Pages build 状态、线上抽样与回滚可用性
+- `sourceDigest` 已含 W10a EOL 规范化（CRLF/LF 可复算）；`siteDigest` 仍受 `.icm-build-meta.json` 的 `builtAt` 影响，只对当次产物有效——语义与复算方法见 [docs/site-release-digest.md](docs/site-release-digest.md)
 - 如果未来改成子路径部署，而不是域名根目录部署，需要额外补 `base path（基础路径）` 支持

@@ -1,6 +1,8 @@
 # 站点发布工作流
 
-> 最新发布记录：[2026-11-17 GitHub Pages 0.1.1](releases/2026-11-17-v0.1.1-pages.md)。
+> 最新发布记录：[2026-11-17 GitHub Pages 0.1.1 W10c](releases/2026-11-17-v0.1.1-pages-w10.md)（当前线上 `c6e42a4`）。
+> 历史记录：[2026-11-17-v0.1.1-pages.md](releases/2026-11-17-v0.1.1-pages.md)（`e498eb3`，provenance-only，已被取代）。
+> 摘要语义：见 [site-release-digest.md](site-release-digest.md)。
 > 当前边界（D6-B）：暂无正式域名，只更新 GitHub Pages；根站点 `site/v0.1.1`/`site/current`、OSS/CDN 等正式域名决议后再做。
 
 ## 一次完整发布的顺序
@@ -18,35 +20,48 @@
 11. 做公网抽样验收
 12. 在 `docs/releases/<日期>-<版本>-<目标>.md` 记录本次发布（提交/差分、manifest 字段、build/线上验证、已知限制、回滚），并更新 README/START_HERE/本文件的链接
 
-> 根站点相关步骤（2–6、9–10）当前被 D6-B 正式域名阻塞；Pages 已在 2026-11-17 完成一次 **provenance-only** 更新（见 `docs/releases/2026-11-17-v0.1.1-pages.md`）。
+> 根站点相关步骤（2–6、9–10）当前被 D6-B 正式域名阻塞。Pages 已于 2026-11-17 完成两次发布：
+> `e498eb3`（W2b provenance-only，已被取代）→ **`c6e42a4`（W10c：链接修复 + 规范化 provenance + 站点脚本更新，当前线上）**；
+> 详见 [releases/2026-11-17-v0.1.1-pages-w10.md](releases/2026-11-17-v0.1.1-pages-w10.md)。
+
+## Pages 发布历史（D6-B）
+
+| 线上提交 | 日期 | 内容 | 状态 |
+|---|---|---|---|
+| `ec58b6b` | 2026-04-24 | 0.1.0 期站点 | 已被取代 |
+| `e498eb3` | 2026-11-17 | W2b provenance-only（manifest + 0.1.1 meta） | 已被取代 |
+| **`c6e42a4`** | 2026-11-17 | **W10c：W10b 链接修复（149 页/607 处）+ W10a 规范化 sourceDigest + W3 本地资源 bridge 惰性脚本 + 45 legacy 图核验（462 HTML/569 files）** | **当前线上** |
 
 ## Pages provenance 发布（D6-B）
 
-Pages 子路径站点（base=`/introduction-to-classical-music-sites/`）的发布流程（2026-11-17 已执行一次）：
+Pages 子路径站点（base=`/introduction-to-classical-music-sites/`）的发布流程（2026-11-17 已按此流程执行两次：`e498eb3`、`c6e42a4`）：
 
 1. 在**隔离环境**用已验收的软件提交 + 官方库导出 Pages 站点：
    ```powershell
    node scripts/export-site-release.mjs --source <官方库> --out <work>\pages-v<版本> --base /introduction-to-classical-music-sites/
    ```
    - 必须在 PowerShell 中执行，避免 Git-Bash/MSYS 把 `/base/` 参数改写为 Windows 路径。
-2. 校验 manifest：`appVersion`、`siteBase`、`sourceDigest`/`siteDigest` 可复算（`hashDirectory`），中文 `libraryName` 在 Windows PowerShell 5.1 下可读。
+2. 校验 manifest：`appVersion`、`siteBase`、`sourceDigest`/`siteDigest` 可复算（`hashDirectory`，算法见 [site-release-digest.md](site-release-digest.md)），中文 `libraryName` 在 Windows PowerShell 5.1 下可读。
+   - `sourceDigest` 已含 W10a EOL 规范化（CRLF/LF 可复算）；`siteDigest` 仍受 `builtAt` 影响，只对当次产物复算有效，发布记录需同时记录 manifest SHA256。
 3. 运行 Pages 模式审计：
    ```powershell
    powershell -ExecutionPolicy Bypass -File .\scripts\audit-site.ps1 -Version v<版本> -SiteDir <work>\pages-v<版本> -ExpectedSiteBase /introduction-to-classical-music-sites/ -SkipStaticMetadata
    ```
    Pages 构建不生成根站点专属的 `robots.txt/sitemap.xml`，所以跳过静态元文件断言；manifest/base、禁止内容、本机路径等仍需通过。
-4. 用临时 worktree（从 `origin/pages` 检出）替换站点内容、保留/生成 `.nojekyll`，**先预览 diff**；预期仅 provenance 类文件变化（`.icm-build-meta.json` + 新增 `site-release-manifest.json`），若出现未预期 HTML/资源变化必须先评审。
+4. 用临时 worktree（从 `origin/pages` 检出）替换站点内容、保留/生成 `.nojekyll`，**先预览 diff**；发布内容可能是 provenance-only（仅 `.icm-build-meta.json` + `site-release-manifest.json`），也可能包含软件侧已验收的站点行为修复（如 W3 本地资源 bridge 脚本、W10b 链接 base 修复）——必须逐类解释 diff（HTML 数量、新增/删除文件、链接计数）并经 E-VERIFY/root 评审。
+   - 当前 Pages 产物基线：462 HTML / **569 files**（含 `_astro/SearchPanel…DP1T1OlE.js`；100 个 `library-assets`，其中 45 legacy、55 managed）。文件数变化必须可解释。
 5. 在临时 worktree 中创建 commit（示例信息 `deploy: publish v<版本>`），确认 commit 的 parent = 当前 `origin/pages`、主工作树/`site/current` 未被修改。
 6. root/用户批准后 **fast-forward** 推送：`git push origin <local-ref>:pages`；禁止未批准的 force-push。
-7. 推送后验证：GitHub Pages build 状态为 `built` 且 commit 匹配、线上抽样 200、`/site-release-manifest.json` 与 `/.icm-build-meta.json` 可访问且字段/哈希与发布证据一致。
+7. 推送后验证：GitHub Pages build 状态为 `built` 且 commit 匹配、线上抽样 200、`/site-release-manifest.json` 与 `/.icm-build-meta.json` 可访问且字段/哈希与发布证据一致；按 [site-release-digest.md](site-release-digest.md) 复核 `sourceDigest`（规范化值）与 manifest SHA256。
 8. 回滚：默认在 `pages` 上 revert 发布提交并推送（新提交，安全）；应急 force-push 回上一线上 SHA 需明确批准。详见发布记录。
 
-### Pages 已知限制（后续工作项）
+### Pages 已知限制 / 已关闭项
 
-- **W10a `sourceDigest` EOL**：官方库 `core.autocrlf=true` 且无 `.gitattributes`，导出哈希绑定 CRLF 工作树，LF checkout/CI 无法复算；W7a 前必须修复（官方库 `eol=lf` + renormalize，或哈希按规范化文本/git blob），修复后重新导出并再次做 provenance-only Pages 更新。
-- **W10b 根绝对链接**：149 个实体页共 607 处 `/works/...`、`/recordings/...` 缺 Pages base（在 Pages 子路径下 404，既有缺陷）；修复导出侧 href 生成后重建 Pages 并抽样。
-- **W10c 站点仓库 EOL/长路径治理**：补 `.gitattributes`、从 blob 复算 digest、`core.longpaths` 说明（later）。
-- `siteDigest` 为**当次构建**复算值（包含 `.icm-build-meta.json` 的 builtAt 与 `.nojekyll`），不是跨构建稳定值。
+- **W10a `sourceDigest` EOL（已修复，随 `c6e42a4` 发布）**：软件 W10a 对文本摘要做 CRLF/CR→LF 规范化，Windows CRLF 工作树与 LF checkout/CI 复算一致；官方库 `c47f519` 当前 `sourceDigest=cfa59423…b333`（取代旧 `7e1a2316…31620`）。见 [site-release-digest.md](site-release-digest.md)。
+- **W10b 根绝对链接（已修复，随 `c6e42a4` 发布）**：149 页/607 处 `/works/...`、`/recordings/...` 已带 Pages base；发布前审计为 0 缺 base / 0 重复前缀，线上抽样通过。
+- **W10c 站点仓库 EOL/长路径治理（later）**：补 `.gitattributes`、从 blob 复算 digest、`core.longpaths` 说明。
+- `siteDigest` 仍为**当次构建**复算值（包含 `.icm-build-meta.json` 的 builtAt 与 `.nojekyll`），不是跨构建稳定值；发布记录应同时记录 manifest SHA256。
+- 根站点（`site/current`/`site/v0.1.1`、`robots/sitemap`、OSS/CDN）仍待 D6 正式域名，本流程的 Pages 结论不能外推到根站点。
 
 ## 静态元文件要求
 
@@ -88,6 +103,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\write-static-metadata.ps1 -Ve
   - `-BaseUrl https://<域名>/<子路径>/` → 期望 base `/<子路径>/`
 - 需要重新生成 release 时，manifest 必须随站点一起重新导出，不要手工伪造 digest。
 - Pages 发布后 `site-release-manifest.json` 与 `.icm-build-meta.json` 会**公开可访问**（仅库 id/名称/版本/digest，无敏感信息）；发布前确认可披露。
+- 摘要字段语义、EOL 规范化与复算方法详见 [site-release-digest.md](site-release-digest.md)；发布记录需同时记录 `sourceDigest`、`siteDigest` 与 manifest SHA256。当前 Pages（`c6e42a4`）为 `sourceDigest=cfa59423…b333`、`siteDigest=7a633492…eb68`、manifest SHA256 `1AB7D3D4…E0C`。
 
 ## 审计项与失败处理
 
@@ -119,7 +135,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\test-site-release.ps1
 
 - 版本归档：`site/v0.1.1`
 - 当前准备上线版本：`site/current`
-- 发布记录：`docs/releases/<日期>-<版本>-<目标>.md`（如 `2026-11-17-v0.1.1-pages.md`）
+- 发布记录：`docs/releases/<日期>-<版本>-<目标>.md`（如 `2026-11-17-v0.1.1-pages.md`；后续修订/追加发布可加后缀，如 `2026-11-17-v0.1.1-pages-w10.md`）
 
 ## 每次发布至少检查
 
@@ -132,8 +148,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\test-site-release.ps1
 - 样式和图片资源
 - 404 页面
 - `robots.txt` 与 `sitemap.xml`（用浏览器或 `audit-site.ps1` 复核；Pages 构建不提供这两个文件）
-- Pages：`site-release-manifest.json`、`.icm-build-meta.json`、Pages build 状态与线上抽样
-- 发布记录：提交 SHA、diff、manifest/digest、build/抽样结果、回滚方案、已知限制
+- Pages：`site-release-manifest.json`（含 `sourceDigest` 规范化值/manifest SHA256）、`.icm-build-meta.json`、Pages build 状态（commit 匹配）与线上抽样
+- 发布记录：提交 SHA、diff 分类、manifest/digest、build/抽样结果、回滚方案、已知限制；必须明确是否取代先前发布记录
 
 ## 禁止事项
 
@@ -146,5 +162,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\test-site-release.ps1
 - 不要把根路径站点直接发布到 Pages 子路径
 - 不要在未审计或未确认差异前传入 `-Publish`，也不要在未通过审计时上传 `OSS`
 - 不要在未经 root/用户批准时推送 `pages`，也不要使用未经批准的 force-push（发布必须 fast-forward）
-- 不要把 `siteDigest` 当作跨构建稳定值，也不要在 LF/CRLF 工作树之间直接比对 `sourceDigest`（W10a 修复前以当次工作树复算为准）
-- 不要在发布后跳过 Pages build 状态与线上抽样验证；发布记录必须包含回滚步骤
+- 不要把 `siteDigest` 当作跨构建稳定值；`sourceDigest` 在 W10a 后已规范化（CRLF/LF 可复算），但仍只在同一官方库 commit + 文本规范化算法下比对
+- 不要在发布后跳过 Pages build 状态与线上抽样验证；发布记录必须包含回滚步骤，并明确新发布是否取代旧发布记录
