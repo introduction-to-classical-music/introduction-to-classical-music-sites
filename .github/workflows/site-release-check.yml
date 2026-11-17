@@ -3,7 +3,7 @@ name: site-release-check
 on:
   push:
     branches:
-      - main
+      - "**"
   pull_request:
   workflow_dispatch:
 
@@ -30,4 +30,8 @@ jobs:
 
       - name: Run site release regression tests
         shell: pwsh
-        run: ./scripts/test-site-release.ps1
+        run: |
+          if (-not (Test-Path ./scripts/test-site-release.ps1)) {
+            throw "scripts/test-site-release.ps1 is missing after checkout"
+          }
+          ./scripts/test-site-release.ps1

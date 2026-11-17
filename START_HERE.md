@@ -2,13 +2,13 @@
 
 这份文件面向新的维护者或合作开发者。
 
-当前这个仓库已完成“公网部署前的本地收口”，并已于 2026-11-17 更新 GitHub Pages 0.1.1（provenance 更新）；剩余工作主要集中在正式域名、备案、根站点归档与阿里云线上操作。
+当前这个仓库已完成“公网部署前的本地收口”，并于 2026-11-17 完成 GitHub Pages 0.1.1 的 W10c 更新（链接修复 + 规范化 provenance）；剩余工作主要集中在正式域名、备案、根站点归档与阿里云线上操作。
 
 ## 当前状态
 
 已经完成的部分：
 
-- **GitHub Pages 0.1.1 已发布并验证（2026-11-17）**：`pages` 分支提交 `e498eb3`（父 `ec58b6b`），Pages build 状态 `built`，线上 manifest 200；页面内容与上一版本一致（provenance 更新）。发布记录见 [docs/releases/2026-11-17-v0.1.1-pages.md](docs/releases/2026-11-17-v0.1.1-pages.md)
+- **GitHub Pages 0.1.1 已发布并验证（当前线上 `c6e42a4`，2026-11-17 W10c）**：`pages` 分支提交 `c6e42a46e6176791260045d5054bc98e7b921f3e`（父 `e498eb3`），Pages build 状态 `built`；产物 462 HTML / 569 files，新增 `_astro/SearchPanel…` chunk；W10b 修复 149 页/607 处缺 Pages base 的内部链接，W10a 规范化 `sourceDigest=cfa59423…b333`，W3 本地资源 bridge 在普通浏览器中为惰性提示，45 张 legacy 图片经真实文件核验。发布记录见 [docs/releases/2026-11-17-v0.1.1-pages-w10.md](docs/releases/2026-11-17-v0.1.1-pages-w10.md)（历史记录 [e498eb3 provenance-only](docs/releases/2026-11-17-v0.1.1-pages.md)）
 - 站点按版本归档保存在 `site/`
 - 已有本地审计脚本（`scripts/audit-site.ps1`），会在开头检查 `ripgrep`（`rg`），缺失即显式失败；并检查：
   - `sitemap.xml` 可被 XML 解析，且 `<loc>` 数量等于 HTML 页面数（`404.html` 不计入）
@@ -37,15 +37,16 @@
 - 正式域名解析
 - 用正式 base 与官方库重新导出并生成 `site/v0.1.1`、`site/current` 根站点产物（当前归档产物仍是旧的损坏元文件，需要重新生成，不能手工伪造；Pages 0.1.1 已先行更新，根站点等待 D6-B 正式域名）
 
-此外，以下站点已知限制已列入后续工作项（详见最新发布记录）：
+此外，以下站点已知限制/后续项（详见最新发布记录）：
 
-- **W10a**：`sourceDigest` 目前绑定 CRLF 工作树（官方库 `core.autocrlf=true` 且无 `.gitattributes`），LF checkout/CI 无法复算；W7a 前必须关闭
-- **W10b**：149 个实体页存在 607 处缺少 Pages base 的根绝对链接（既有缺陷，非 2026-11-17 发布引入）；修复后需重建 Pages 并抽样
-- **W10c**：站点仓库 EOL/长路径治理（later）
+- **W10a（已在 Pages 关闭，随 `c6e42a4` 发布）**：`sourceDigest` 已按 W10a 文本 EOL 规范化，跨 CRLF/LF 可复算（官方库 c47f519 为 `cfa59423…b333`），取代旧 `7e1a…`；语义见 [docs/site-release-digest.md](docs/site-release-digest.md)
+- **W10b（已在 Pages 关闭，随 `c6e42a4` 发布）**：149 页/607 处 `/works/...`、`/recordings/...` 已带 Pages base，线上抽样通过
+- **W10c（later）**：站点仓库 EOL/长路径治理（`.gitattributes`、从 blob 复算 digest、`core.longpaths` 说明）
+- **根站点**：`site/v0.1.1`、`site/current`、`robots/sitemap`、OSS/CDN 等仍按 D6-B 等待正式域名决议；Pages 结论不能外推到根站点
 
 ## 推荐接手顺序
 
-1. 阅读最新发布记录 [docs/releases/2026-11-17-v0.1.1-pages.md](docs/releases/2026-11-17-v0.1.1-pages.md)
+1. 阅读最新发布记录 [docs/releases/2026-11-17-v0.1.1-pages-w10.md](docs/releases/2026-11-17-v0.1.1-pages-w10.md) 与摘要语义 [docs/site-release-digest.md](docs/site-release-digest.md)
 2. 阅读 [README.md](README.md)
 3. 阅读 [docs/alicloud-oss-cdn-plan.md](docs/alicloud-oss-cdn-plan.md)
 4. 先运行发布脚本回归测试，确认本机环境正常：
@@ -79,6 +80,7 @@
 - 未通过审计的站点不允许上传到 `OSS` 或 Pages
 - Pages 发布必须经 root/用户批准后以 **fast-forward** 方式推送 `pages`，并在发布后验证 build 与线上抽样；回滚步骤见最新发布记录
 - Pages 根目录的 `site-release-manifest.json` / `.icm-build-meta.json` 是公开 provenance 文件（仅库 id/名称/版本/digest），发布前确认无敏感信息
+- `sourceDigest` 已含 W10a EOL 规范化（CRLF/LF 可复算）；`siteDigest` 仍受 `.icm-build-meta.json` 的 `builtAt` 影响，只对当次产物有效；语义见 [docs/site-release-digest.md](docs/site-release-digest.md)
 
 ## 建议验收点
 
