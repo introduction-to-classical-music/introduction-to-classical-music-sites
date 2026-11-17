@@ -39,7 +39,9 @@ https://introduction-to-classical-music.github.io/introduction-to-classical-musi
 - `docs/`
   互联网部署说明、阿里云方案、回滚说明
 - `scripts/`
-  站点同步、上线前审计、静态元文件生成、`OSS` 上传、`CDN` 刷新脚本
+  站点同步、上线前审计、静态元文件生成、`OSS` 上传、`CDN` 刷新脚本，以及发布脚本回归测试
+- `.github/workflows/`
+  `site-release-check.yml`：在 `windows-latest` 上运行发布脚本回归测试
 - `config/`
   部署配置模板
 
@@ -56,45 +58,64 @@ https://introduction-to-classical-music.github.io/introduction-to-classical-musi
 同步一个版本的站点到仓库：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\stage-site.ps1 -Version v0.1.0 -SourceSitesRoot <site-source-root>
+powershell -ExecutionPolicy Bypass -File .\scripts\stage-site.ps1 -Version v0.1.1 -SourceSitesRoot <site-source-root>
 ```
 
 也可以直接传入已经构建好的站点目录：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\stage-site.ps1 -Version v0.1.0 -SourceSiteDir <built-site-dir>
-```
-
-审计某个版本是否适合公网发布：
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\audit-site.ps1 -Version v0.1.0
+powershell -ExecutionPolicy Bypass -File .\scripts\stage-site.ps1 -Version v0.1.1 -SourceSiteDir <built-site-dir>
 ```
 
 生成 `robots.txt`、`sitemap.xml` 和 `404.html`：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\write-static-metadata.ps1 -Version v0.1.0 -BaseUrl https://your-domain.example
+powershell -ExecutionPolicy Bypass -File .\scripts\write-static-metadata.ps1 -Version v0.1.1 -BaseUrl https://<正式域名>
 ```
+
+- `-BaseUrl` 为必填项，必须使用真实公网域名（根路径部署时填域名本身，子路径部署时带路径前缀）。
+- `example.com`、`your-domain.example`、`localhost` 等占位域名会被直接拒绝；只有本地临时 fixture 测试才允许显式传 `-AllowTestDomain`，并且该开关拒绝写入仓库内的 `site/` 目录。
+- 脚本生成后会重新解析 `sitemap.xml`，断言 `<loc>` 数量等于 HTML 页面数（`404.html` 是错误页，不计入），任何不一致都会直接报错。
+
+审计某个版本是否适合公网发布：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\audit-site.ps1 -Version v0.1.1 -BaseUrl https://<正式域名>
+```
+
+- 运行前必须先安装 `ripgrep`（`rg`）并加入 `PATH`；缺失时审计脚本会显式失败，不会静默跳过扫描。
+- 站点目录中必须存在 `site-release-manifest.json`，且其中的 `siteBase` 与本次发布 base 一致。
+- 审计项包括：`sitemap.xml` 可被 XML 解析且 `<loc>` 数等于 HTML 页数；`robots.txt` 的 `Sitemap` 域名/路径与 base 一致；禁止出现 `example.com`、`System.Object[]`、`__local-resource`、本机盘符绝对路径等缺陷特征。
+- 审计失败会以非零退出码结束，并把明细写入 `logs/audit-site-<version>.log`（`logs/` 已被仓库忽略）。
 
 上传站点到阿里云 `OSS`：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\publish-oss.ps1 -Version v0.1.0 -Bucket your-bucket-name -Endpoint oss-cn-hangzhou.aliyuncs.com
+powershell -ExecutionPolicy Bypass -File .\scripts\publish-oss.ps1 -Version v0.1.1 -Bucket oss://<bucket-name> -Endpoint oss-cn-hangzhou.aliyuncs.com -BaseUrl https://<正式域名>
 ```
+
+`publish-oss.ps1` 在调用 `ossutil` 之前会强制先执行 `audit-site.ps1`；审计不通过时上传立即中止，不存在跳过审计的开关。未传 `-BaseUrl` 时按 manifest 的 `siteBase` 做路径校验（无法校验域名）。
 
 刷新阿里云 `CDN`：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\refresh-cdn.ps1 -Domain your-domain.example -Paths https://your-domain.example/index.html,https://your-domain.example/sitemap.xml
+powershell -ExecutionPolicy Bypass -File .\scripts\refresh-cdn.ps1 -Domain <正式域名> -Paths https://<正式域名>/index.html,https://<正式域名>/sitemap.xml
 ```
 
 Pages 发布默认只预览差异；确认后才传入 `-Publish`：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\publish-pages.ps1 -Version v0.1.0 -SourceSiteDir <pages-site-dir>
-powershell -ExecutionPolicy Bypass -File .\scripts\publish-pages.ps1 -Version v0.1.0 -SourceSiteDir <pages-site-dir> -Publish
+powershell -ExecutionPolicy Bypass -File .\scripts\publish-pages.ps1 -Version v0.1.1 -SourceSiteDir <pages-site-dir>
+powershell -ExecutionPolicy Bypass -File .\scripts\publish-pages.ps1 -Version v0.1.1 -SourceSiteDir <pages-site-dir> -Publish
 ```
+
+运行发布脚本回归测试（本地与 CI 使用同一入口）：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\test-site-release.ps1
+```
+
+测试在临时目录构造正例/负例 fixture，结束后自动清理，不会写入仓库；`push` 到 `main` 或提交 PR 时由 `.github/workflows/site-release-check.yml` 在 `windows-latest` 上运行。
 
 ## 阿里云推荐方案
 

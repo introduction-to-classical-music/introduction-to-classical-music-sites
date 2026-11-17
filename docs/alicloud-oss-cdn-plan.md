@@ -27,17 +27,20 @@
 
 ## 本地上线前还要做的事
 
-- 运行站点审计脚本，确认不包含：
+- 运行站点审计脚本（`scripts/audit-site.ps1`，需要 `ripgrep` 在 `PATH` 中），确认不包含：
   - `localhost`
   - `127.0.0.1`
   - 本地磁盘路径
   - `__local-resource`
   - 测试专栏或测试链接
-- 在拿到正式域名后生成：
+  - `example.com`、`System.Object[]` 等历史缺陷特征
+- 确认站点目录中有 `site-release-manifest.json`，且 `siteBase` 与本次发布的 base 一致
+- 在拿到正式域名后，用真实域名生成：
   - `robots.txt`
   - `sitemap.xml`
   - `404.html`
 - 确认站点按“域名根目录”部署，而不是子路径部署
+- 上传脚本 `publish-oss.ps1` 会在调用 `ossutil` 前自动审计；审计不通过时上传中止，需修复后重跑
 
 ## 阿里云侧需要准备的内容
 
