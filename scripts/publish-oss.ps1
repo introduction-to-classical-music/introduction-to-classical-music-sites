@@ -1,29 +1,51 @@
 param(
   [string]$Version = "v0.1.0",
   [string]$Bucket,
-  [string]$Endpoint
+  [string]$Endpoint,
+  [string]$BaseUrl = "",
+  [string]$SiteDir = ""
 )
 
 $ErrorActionPreference = "Stop"
 
-if (-not $Bucket) {
-  throw "请提供 OSS Bucket，例如：-Bucket oss://your-bucket-name"
+if ([string]::IsNullOrWhiteSpace($Bucket)) {
+  throw "Bucket is required, for example: -Bucket oss://your-bucket-name"
 }
 
-if (-not $Endpoint) {
-  throw "请提供 OSS Endpoint，例如：-Endpoint oss-cn-your-region.aliyuncs.com"
+if ([string]::IsNullOrWhiteSpace($Endpoint)) {
+  throw "Endpoint is required, for example: -Endpoint oss-cn-your-region.aliyuncs.com"
 }
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$siteRoot = Join-Path $repoRoot "site\$Version"
+$siteRoot = if ([string]::IsNullOrWhiteSpace($SiteDir)) {
+  Join-Path $repoRoot "site\$Version"
+} else {
+  [System.IO.Path]::GetFullPath($SiteDir)
+}
 
-if (-not (Test-Path $siteRoot)) {
+if (-not (Test-Path -LiteralPath $siteRoot -PathType Container)) {
   throw "Site directory not found: $siteRoot"
+}
+
+# Blocking gate: never upload a site that has not passed audit-site.ps1.
+# The audit checks sitemap/robots/manifest, forbidden content and local paths.
+$auditScript = Join-Path $PSScriptRoot "audit-site.ps1"
+$auditParameters = @{
+  Version = $Version
+  SiteDir = $siteRoot
+}
+if (-not [string]::IsNullOrWhiteSpace($BaseUrl)) {
+  $auditParameters["BaseUrl"] = $BaseUrl
+}
+Write-Host "Running mandatory site audit before upload: $siteRoot"
+& $auditScript @auditParameters
+if (-not $?) {
+  throw "Site audit failed; OSS upload aborted."
 }
 
 $ossutil = Get-Command ossutil -ErrorAction SilentlyContinue
 if (-not $ossutil) {
-  throw "未找到 ossutil，请先安装并完成阿里云凭证配置。"
+  throw "ossutil was not found. Install ossutil and configure the Aliyun credentials first."
 }
 
 $target = "$Bucket/"

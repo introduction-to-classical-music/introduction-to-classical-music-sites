@@ -45,7 +45,10 @@ try {
   }
   New-Item -ItemType File -Force -Path (Join-Path $tempRoot ".nojekyll") | Out-Null
 
-  & (Join-Path $PSScriptRoot "audit-site.ps1") -SiteDir $tempRoot -Version $Version
+  # The Pages build does not ship root-only robots.txt/sitemap.xml, so the
+  # static metadata assertions are skipped here; the manifest/base and
+  # forbidden-content checks still run.
+  & (Join-Path $PSScriptRoot "audit-site.ps1") -SiteDir $tempRoot -Version $Version -ExpectedSiteBase $expectedBase -SkipStaticMetadata
   if (-not $?) { throw "Pages site audit failed" }
 
   git -C $tempRoot add -A
