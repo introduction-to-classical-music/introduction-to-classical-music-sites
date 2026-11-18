@@ -43,6 +43,8 @@
 - **W10b（已在 Pages 关闭，随 `c6e42a4` 发布）**：149 页/607 处 `/works/...`、`/recordings/...` 已带 Pages base，线上抽样通过
 - **W10c（later）**：站点仓库 EOL/长路径治理（`.gitattributes`、从 blob 复算 digest、`core.longpaths` 说明）
 - **根站点**：`site/v0.1.1`、`site/current`、`robots/sitemap`、OSS/CDN 等仍按 D6-B 等待正式域名决议；Pages 结论不能外推到根站点
+- **`site/current` 是历史/未发布产物（不是发布源）**：仍含 `robots.txt` 的 `example.com`、`sitemap.xml` 的 `System.Object[]` 且无 manifest；不得手工修补或直接发布，D6-B 后必须按 export→audit→manifest 重建（见 [docs/release-workflow.md](docs/release-workflow.md)）
+- **Pages-only 例外（W2b 判据②）**：Pages 构建不含根站点 `robots.txt`/`sitemap.xml`，线上 404 是 D6-B 下预期；审计用 `-SkipStaticMetadata`，正式域名后再补（见 [docs/release-workflow.md](docs/release-workflow.md)）
 
 ## 推荐接手顺序
 

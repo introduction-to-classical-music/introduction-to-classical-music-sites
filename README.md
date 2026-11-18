@@ -37,10 +37,13 @@ https://introduction-to-classical-music.github.io/introduction-to-classical-musi
   - 关键变化：W10b 修复 149 页/607 处缺 Pages base 的内部链接（线上抽样 200）；W10a `sourceDigest=cfa59423…b333`（CRLF/LF 可复算，取代旧 `7e1a…`）；W3 本地资源 bridge 在普通浏览器中**惰性提示**、不访问本地资源。
   - provenance 文件（公开可访问）：`/introduction-to-classical-music-sites/site-release-manifest.json`（`siteDigest=7a633492…eb68`，manifest SHA256 `1AB7D3D4…E0C`）、`/introduction-to-classical-music-sites/.icm-build-meta.json`
   - 发布记录：[docs/releases/2026-11-17-v0.1.1-pages-w10.md](docs/releases/2026-11-17-v0.1.1-pages-w10.md)
-- **根站点（`site/v0.1.1`、`site/current`）仍等待正式域名**（D6-B）：未生成、未替换，`site/` 归档仍是旧产物；OSS/CDN 未执行。
+- **根站点（`site/v0.1.1`、`site/current`）仍在 D6-B 前，处于历史/未发布状态**：未生成、未替换，`site/` 归档仍是旧产物；OSS/CDN 未执行。
+  - **`site/current` 不是当前可发布内容**：其中 `robots.txt` 仍指向占位域名 `example.com`，`sitemap.xml` 正文仍含历史损坏标记 `System.Object[]`，且没有 `site-release-manifest.json`。**不得把它当发布源、不得手工修补/伪造**；D6-B 正式域名后必须按 `export-site-release` → `audit-site` → 带 `site-release-manifest.json` 的流程重建（详见 [docs/release-workflow.md](docs/release-workflow.md#sitecurrent-与根站点归档状态d6-b-前)）。
+  - `site/v0.1.1` 尚未归档（当前只有历史 `site/v0.1.0`）。
 - 已知限制 / 后续：
   - **W10a（已修复并随 `c6e42a4` 发布）**：`sourceDigest` 已按 W10a 规范化，跨 CRLF/LF 可复算；详见 [docs/site-release-digest.md](docs/site-release-digest.md)。
   - **W10b（已修复并随 `c6e42a4` 发布）**：149 页/607 处内部链接已带 Pages base，线上抽样通过。
+  - **W2b 判据②（Pages-only 例外）**：Pages 构建不提供根站点专属的 `robots.txt`/`sitemap.xml`，线上二者 404 是 D6-B 下的预期（Pages 审计使用 `-SkipStaticMetadata`）；正式域名后由根站点流程生成，见 [docs/release-workflow.md](docs/release-workflow.md#pages-only-静态元文件例外w2b-判据②口径)。
   - **W10c（later）**：站点仓库 EOL/长路径治理（`.gitattributes`、从 blob 复算 digest、`core.longpaths` 说明）。
   - `siteDigest` 仍为当次构建值（包含 `.icm-build-meta.json` 的 builtAt），不是跨构建稳定值。
 
@@ -159,6 +162,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\test-site-release.ps1
 
 - 站点中保留当前 `QQ` 联系方式，作为正式用户反馈渠道
 - 公网站点默认不应暴露本地资源链接或本地磁盘路径
+- `site/current`/`site/v0.1.0` 是历史归档（D6-B 前未发布），不是发布源；发布必须使用 `export-site-release` 产物并附 `site-release-manifest.json`，经审计后才允许发布/上传
 - Pages 根目录的 `site-release-manifest.json` / `.icm-build-meta.json` 是**公开** provenance 文件，仅含库 id/名称/版本/digest；发布前确认无敏感信息
 - GitHub Pages 只发布 `pages` 分支；正式域名根站点、`site/current` 与 OSS/CDN 待 D6 正式域名决议后另行发布
 - 每次 Pages/根站点发布后，必须按发布记录中的步骤验证 Pages build 状态、线上抽样与回滚可用性

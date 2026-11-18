@@ -62,6 +62,27 @@ Pages 子路径站点（base=`/introduction-to-classical-music-sites/`）的发�
 - **W10c 站点仓库 EOL/长路径治理（later）**：补 `.gitattributes`、从 blob 复算 digest、`core.longpaths` 说明。
 - `siteDigest` 仍为**当次构建**复算值（包含 `.icm-build-meta.json` 的 builtAt 与 `.nojekyll`），不是跨构建稳定值；发布记录应同时记录 manifest SHA256。
 - 根站点（`site/current`/`site/v0.1.1`、`robots/sitemap`、OSS/CDN）仍待 D6 正式域名，本流程的 Pages 结论不能外推到根站点。
+- **W8c 发布脚本演练**：发布脚本全链路（export→stage→audit→publish-pages）与安全 revert 回滚已在本地临时副本 + 本地 bare remote 演练（不触碰生产 `pages`），记录见 `_remediation-20261117/evidence/batch11-site-docs/`。
+
+## site/current 与根站点归档状态（D6-B 前）
+
+- **`site/current`/`site/v0.1.0` 是历史归档/未发布产物，不是当前线上内容，也不是发布源。**
+  - `site/current/robots.txt` 仍指向占位域名 `example.com`；`site/current/sitemap.xml` 正文仍含历史损坏标记 `System.Object[]`；且没有 `site-release-manifest.json`（截至本次记录）。
+  - **不得**把 `site/current` 直接复制/上传到 OSS、CDN 或 Pages，也**不得**手工修补这些元文件或伪造 manifest。
+- D6-B 正式域名决议后，根站点必须按以下顺序重建并发布：
+  1. `export-site-release.mjs` 用正式 base 导出（产物带 `site-release-manifest.json`）；
+  2. `write-static-metadata.ps1 -BaseUrl https://<正式域名>` 生成 `robots.txt`/`sitemap.xml`/`404.html`；
+  3. `audit-site.ps1 -BaseUrl https://<正式域名>` 审计通过（不得跳过静态元文件断言）；
+  4. `stage-site.ps1` 归档到 `site/v<版本>` 与 `site/current`（换入新产物后才更新 current）；
+  5. `publish-oss.ps1`（强制审计）上传 OSS，再刷新 CDN。
+- 在此之前，`site/current` 仅作历史参考；任何“用 `site/current` 当发布源”的做法都会绕过 manifest 与审计门禁，必须拒绝。
+
+### Pages-only 静态元文件例外（W2b 判据②口径）
+
+- GitHub Pages 子路径站点（`pages` 分支，base `/introduction-to-classical-music-sites/`）**不提供**根站点专属的 `robots.txt`、`sitemap.xml`（线上访问为 404）以及自定义 `404.html`；这是 D6-B（根站点等正式域名）下的**预期例外**，不判为 Pages 发布失败。
+- 因此 Pages 模式审计使用 `-SkipStaticMetadata`：跳过 sitemap/robots 断言，但仍校验 `site-release-manifest.json`/`siteBase`、禁止内容（`__local-resource`、本机路径、占位域名等）与页面集合。
+- W2b 判据②的“含 sitemap/robots”按 D6-B 修正为：**根站点发布**（正式域名后）必须满足；**Pages-only 阶段**该子项不适用（n.a.），待 D6-B 到期再补并复核。
+- Pages 发布记录与任务卡口径需明确此例外，避免把“线上 robots/sitemap 404”误判为回归；D6-B 决策后，正式域名根站点仍需生成并验证这两个文件。
 
 ## 静态元文件要求
 
@@ -163,4 +184,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\test-site-release.ps1
 - 不要在未审计或未确认差异前传入 `-Publish`，也不要在未通过审计时上传 `OSS`
 - 不要在未经 root/用户批准时推送 `pages`，也不要使用未经批准的 force-push（发布必须 fast-forward）
 - 不要把 `siteDigest` 当作跨构建稳定值；`sourceDigest` 在 W10a 后已规范化（CRLF/LF 可复算），但仍只在同一官方库 commit + 文本规范化算法下比对
+- 不要把 `site/current`/`site/v0.1.0` 当作发布源直接上传 OSS/CDN/Pages，或在 D6-B 前手工修补其 `robots.txt`/`sitemap.xml`/manifest（必须走 export→audit→manifest 重建）
+- 不要把 Pages-only 的 `robots.txt`/`sitemap.xml` 404 当作发布回归；该子项在 D6-B 下按例外处理，正式域名根站点发布时必须补齐
 - 不要在发布后跳过 Pages build 状态与线上抽样验证；发布记录必须包含回滚步骤，并明确新发布是否取代旧发布记录
