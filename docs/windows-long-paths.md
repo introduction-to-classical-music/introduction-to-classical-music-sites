@@ -17,6 +17,7 @@
 | 本机 OS 长路径策略 | `HKLM\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled = 1` | Windows 原生长路径支持已开启 |
 
 > 注意：仓库内部讨论中“约 459 字符”指上表 **Git 转义显示长度**；决定是否超 `MAX_PATH` 的是**真实绝对路径长度**（取决于 clone 根目录，见上表）。
+> 后续可执行守卫改用**固定参考根 122 的投影长度**（`122 + 1 + repo 相对路径长度`）做预算判定，因此同一 commit 在本机与更短的 CI checkout 根下得到相同结果；上表的 284 同时是 canonical 本机实际值与该投影值。详见下文“可执行长路径守卫”。
 
 ## 必需配置：`core.longpaths=true`
 
@@ -73,33 +74,50 @@ git -c core.quotepath=false ls-files -z | tr '\0' '\n' | awk '{ print length, $0
 
 ## 可执行长路径守卫（`scripts/check-long-paths.ps1`，W9b / C-F21）
 
-仓库已接入可执行守卫，防止长路径继续恶化。它用 `git ls-tree -r -z --name-only HEAD` 读取**真实 UTF-8 路径**（NUL 分隔，不经过 Git C-quote 转义），计算每条 tracked 文件的**绝对 Windows 路径长度**，只读、不重命名任何文件。
-
-```powershell
-# 本机/CI 直接运行（默认阈值 240，上限 260）
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\check-long-paths.ps1
-
-# 机器可读（CI/证据）
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\check-long-paths.ps1 -Json
-```
-
-输出示例（本机 canonical clone，root=122 字符）：
+仓库已接入可执行守卫，防止长路径继续恶化。它用 `git ls-tree -r -z --name-only HEAD` 读取**真实 UTF-8 路径**（NUL 分隔，不经过 Git C-quote 转义），并对每条 tracked 文件计算**根目录无关的投影长度**：
 
 ```text
-tracked=1160 max=284 overThreshold(240)=23 overLimit(260)=6 core.longpaths=true
-acceptedBaseline: overLimit=6 max=284 longPaths=6 matched=6 newOverLimit=0
-RESULT: PASS (accepted baseline not exceeded; no new >= 260 paths)
+projectedLength = ReferenceRootLength + 1 + relativePath.Length
+ReferenceRootLength = 122   # canonical 本地 clone 根长度（审查 C-F21 基线）
 ```
 
-**Accepted baseline（审查 C-F21 登记）**：6 条 tracked 路径 ≥260、max=284。这 6 条是 `site/current` 与 `site/v0.1.0` 下同名 legacy 人物图（`person-symphonieorchester-des-bayerischen-rundfunks`、`person-bremen-philharmonisches-staatsorchester`、`person-rundfunk-sinfonieorchester-berlin`）；守卫内置这 6 条相对路径白名单。
+**为什么用投影长度**：Windows `MAX_PATH` 阈值针对绝对路径，但绝对长度会随 clone/checkout 根目录变化。本机 canonical 根长 122、最长实际绝对路径 284；GitHub Actions 的 checkout 根 `D:\a\introduction-to-classical-music-sites\introduction-to-classical-music-sites` 更短，实际绝对 max 只有 ~242。如果检查器用实际绝对长度，同一条 commit 在 CI 上会把 6 条 ≥260 路径算成 0 条，新增长路径也可能因根目录短而漏检。投影长度固定参考根 122，保证**同一 commit 在本机与 CI 得到相同的 max/≥260/accepted 结果**；实际绝对长度仍会输出，但只作参考，不参与判定。
 
-失败条件（任一成立即 exit 1）：
+```powershell
+# 本机/CI 直接运行（默认阈值 240，上限 260，参考根 122）
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\check-long-paths.ps1
 
-- 出现**不在 accepted 白名单内**的 ≥260 路径（含重命名后新增/变长路径）；
-- `max absolute length > 284`（即使路径都在白名单内，clone 根过长也会 fail 提示根目录过深）；
-- `overLimit(260) > 6`。
+# 机器可读（CI/证据）；可显式传参考根
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\check-long-paths.ps1 -Json -ReferenceRootLength 122
+```
 
-更低阈值（240）只警告、不失败；低于上限时正常 PASS。因为长度是绝对路径，**同一 commit 在更短的 clone 根（如 CI windows-latest）下计数只会更低**，不会误报；accepted baseline 是上界而非固定值。CI 已在 `windows-latest` 的 `site-release-check.yml` 中加入该步骤（checkout 后、回归测试前）。
+本机 canonical clone 输出示例：
+
+```text
+tracked=1160 projectedMax=284 actualMax=284 referenceRootLength=122 overThreshold(240)=23 overLimit(260)=6 core.longpaths=true
+acceptedBaseline: overLimit=6 maxProjected=284 longPaths=6 matched=6 newOverLimit=0
+RESULT: PASS (accepted projected baseline not exceeded; no new >= 260 paths)
+```
+
+CI（windows-latest，实际 checkout 根更短）预期输出（投影结果与本机一致）：
+
+```text
+tracked=1160 projectedMax=284 actualMax=242 referenceRootLength=122 overThreshold(240)=23 overLimit(260)=6 core.longpaths=(unset/false)
+acceptedBaseline: overLimit=6 maxProjected=284 longPaths=6 matched=6 newOverLimit=0
+RESULT: PASS (accepted projected baseline not exceeded; no new >= 260 paths)
+```
+
+> `actualMax=242` 只是 CI 实际根下的参考值；`projectedMax=284`、`overThreshold(240)=23`、`overLimit(260)=6` 均按投影长度计算，与本机一致。
+
+**Accepted baseline（审查 C-F21 登记）**：6 条 tracked 路径投影 ≥260、投影 max=284。这 6 条是 `site/current` 与 `site/v0.1.0` 下同名 legacy 人物图（`person-symphonieorchester-des-bayerischen-rundfunks`、`person-bremen-philharmonisches-staatsorchester`、`person-rundfunk-sinfonieorchester-berlin`）；守卫内置这 6 条相对路径白名单。
+
+失败条件（任一成立即 exit 1，均用投影长度）：
+
+- 出现**不在 accepted 白名单内**的投影 ≥260 路径（含重命名后新增/变长路径）；
+- `projectedMax > 284`（即使路径都在白名单内，新增更长路径也会 fail）；
+- `overLimit(260, projected) > 6`。
+
+更低阈值（240）只警告、不失败；低于上限时正常 PASS。CI 已在 `windows-latest` 的 `site-release-check.yml` 中加入该步骤（checkout 后、回归测试前），并使用相同的参考根 122。
 
 ## 限制与兼容性
 
