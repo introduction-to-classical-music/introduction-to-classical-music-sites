@@ -86,7 +86,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\check-long-paths.p
 输出示例（本机 canonical clone，root=122 字符）：
 
 ```text
-tracked=1161 max=284 overThreshold(240)=23 overLimit(260)=6 core.longpaths=true
+tracked=1160 max=284 overThreshold(240)=23 overLimit(260)=6 core.longpaths=true
 acceptedBaseline: overLimit=6 max=284 longPaths=6 matched=6 newOverLimit=0
 RESULT: PASS (accepted baseline not exceeded; no new >= 260 paths)
 ```

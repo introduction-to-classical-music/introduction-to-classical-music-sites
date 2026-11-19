@@ -131,7 +131,10 @@ function Get-TrackedPathsRaw {
     throw ("git ls-tree failed (exit " + $process.ExitCode + "): " + $stderr.Trim())
   }
   $text = [System.Text.Encoding]::UTF8.GetString($bytes)
-  return @($text.Split([char]0, [System.StringSplitOptions]::RemoveEmptyEntries))
+  # Explicit char[]: Windows PowerShell 5.1 misbinds String.Split(char, StringSplitOptions)
+  # and silently keeps the trailing empty segment, inflating the tracked count by 1.
+  $separator = [char[]]@([char]0)
+  return @($text.Split($separator, [System.StringSplitOptions]::RemoveEmptyEntries))
 }
 
 function Get-CoreLongpaths {
