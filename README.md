@@ -28,7 +28,9 @@ https://introduction-to-classical-music.github.io/introduction-to-classical-musi
 - [docs/site-release-digest.md](docs/site-release-digest.md)
   `sourceDigest`/`siteDigest` 语义、EOL 规范化与复算方法
 - [docs/windows-long-paths.md](docs/windows-long-paths.md)
-  Windows 长路径说明（`core.longpaths`、路径长度校验、资产改名计划）
+  Windows 长路径说明（`core.longpaths`、路径长度校验、`scripts/check-long-paths.ps1` 守卫与 accepted baseline）
+- `scripts/check-long-paths.ps1`
+  可执行长路径预算守卫（`git ls-tree -z` 真实长度；accepted baseline：6 条 ≥260 / max 284；CI 运行）
 
 ## 当前发布状态（2026-11-17）
 
@@ -168,4 +170,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\test-site-release.ps1
 - 每次 Pages/根站点发布后，必须按发布记录中的步骤验证 Pages build 状态、线上抽样与回滚可用性
 - `sourceDigest` 已含 W10a EOL 规范化（CRLF/LF 可复算）；`siteDigest` 仍受 `.icm-build-meta.json` 的 `builtAt` 影响，只对当次产物有效——语义与复算方法见 [docs/site-release-digest.md](docs/site-release-digest.md)
 - Windows 上 clone 本仓库后必须配置 `core.longpaths=true`（仓库本地配置不会随 clone 传播）；最长路径/校验与资产改名计划见 [docs/windows-long-paths.md](docs/windows-long-paths.md)
+- Windows 长路径预算由 `scripts/check-long-paths.ps1` 持续检查（accepted baseline：6 条 ≥260 / max 284；新增 ≥260 或 max>284 即失败），CI 在 `windows-latest` 运行；不重命名资产（D7-C 内容窗口）
 - 如果未来改成子路径部署，而不是域名根目录部署，需要额外补 `base path（基础路径）` 支持

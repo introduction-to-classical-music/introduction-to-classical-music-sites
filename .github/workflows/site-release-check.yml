@@ -28,6 +28,10 @@ jobs:
           }
           rg --version
 
+      - name: Check Windows long-path budget
+        shell: pwsh
+        run: ./scripts/check-long-paths.ps1
+
       - name: Run site release regression tests
         shell: pwsh
         run: |

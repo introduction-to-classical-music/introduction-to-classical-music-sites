@@ -71,13 +71,43 @@ git -c core.quotepath=false ls-files -z | tr '\0' '\n' | awk '{ print length, $0
 
 验收/发布前建议至少执行：`git status --porcelain`、`git add -A --dry-run`、`git ls-files | Measure-Object`，确认无 `Filename too long` 且文件数与预期一致（当前 `site/current` 569 files）。
 
+## 可执行长路径守卫（`scripts/check-long-paths.ps1`，W9b / C-F21）
+
+仓库已接入可执行守卫，防止长路径继续恶化。它用 `git ls-tree -r -z --name-only HEAD` 读取**真实 UTF-8 路径**（NUL 分隔，不经过 Git C-quote 转义），计算每条 tracked 文件的**绝对 Windows 路径长度**，只读、不重命名任何文件。
+
+```powershell
+# 本机/CI 直接运行（默认阈值 240，上限 260）
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\check-long-paths.ps1
+
+# 机器可读（CI/证据）
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\check-long-paths.ps1 -Json
+```
+
+输出示例（本机 canonical clone，root=122 字符）：
+
+```text
+tracked=1161 max=284 overThreshold(240)=23 overLimit(260)=6 core.longpaths=true
+acceptedBaseline: overLimit=6 max=284 longPaths=6 matched=6 newOverLimit=0
+RESULT: PASS (accepted baseline not exceeded; no new >= 260 paths)
+```
+
+**Accepted baseline（审查 C-F21 登记）**：6 条 tracked 路径 ≥260、max=284。这 6 条是 `site/current` 与 `site/v0.1.0` 下同名 legacy 人物图（`person-symphonieorchester-des-bayerischen-rundfunks`、`person-bremen-philharmonisches-staatsorchester`、`person-rundfunk-sinfonieorchester-berlin`）；守卫内置这 6 条相对路径白名单。
+
+失败条件（任一成立即 exit 1）：
+
+- 出现**不在 accepted 白名单内**的 ≥260 路径（含重命名后新增/变长路径）；
+- `max absolute length > 284`（即使路径都在白名单内，clone 根过长也会 fail 提示根目录过深）；
+- `overLimit(260) > 6`。
+
+更低阈值（240）只警告、不失败；低于上限时正常 PASS。因为长度是绝对路径，**同一 commit 在更短的 clone 根（如 CI windows-latest）下计数只会更低**，不会误报；accepted baseline 是上界而非固定值。CI 已在 `windows-latest` 的 `site-release-check.yml` 中加入该步骤（checkout 后、回归测试前）。
+
 ## 限制与兼容性
 
 - **Git**：`core.longpaths=true` 后 Git for Windows 使用 `\\?\` 长路径 API；这是 clone/checkout/status/add 的主要前提。
 - **OS**：部分工具仍需系统级 `LongPathsEnabled=1`（本机已开启）；未开启的机器即使 Git 配置也可能在其他工具上失败。
 - **PowerShell/.NET**：Windows PowerShell 5.1 / .NET Framework 对长路径支持不一致，部分 cmdlet（如老版本 `Get-ChildItem`/`Copy-Item`、部分 `.NET` API）仍可能受 260 限制；脚本应使用 `-LiteralPath`，必要时先 `cd` 到较短的父目录或使用支持长路径的 API。
 - **Node/7-Zip/robocopy**：现代 Node（`fs`）与 7-Zip/robocopy 通常支持长路径；`Expand-Archive`/`Compress-Archive` 在老环境上可能受限。
-- **CI（GitHub Actions windows-latest）**：checkout 在工作目录展开仓库；若运行器未预置长路径配置，可能 checkout 失败。仓库的 CI 检查（`site-release-check.yml`）以 `scripts/test-site-release.ps1` 为主，测试使用临时目录，不依赖 `site/current` 深路径；若 checkout 出现长度问题，需在运行器/工作目录侧配置长路径或缩短工作目录。
+- **CI（GitHub Actions windows-latest）**：checkout 在工作目录展开仓库；若运行器未预置长路径配置，可能 checkout 失败。仓库的 CI 检查（`site-release-check.yml`）包含 `scripts/check-long-paths.ps1`（长路径预算守卫）与 `scripts/test-site-release.ps1`（回归测试，使用临时目录、不依赖 `site/current` 深路径）；若 checkout 出现长度问题，需在运行器/工作目录侧配置长路径或缩短工作目录。
 - **短路径优先**：把仓库 clone 到较短的根目录（例如 `C:\src\site-deploy`）可显著降低超限概率（当前阈值：根目录 ≤98 字符时 161 字符最长路径不会超过 260）。
 
 ## 资产改名（D7 / W9b，留到内容更新窗口）
