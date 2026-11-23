@@ -8,7 +8,7 @@
 
 已经完成的部分：
 
-- **GitHub Pages 0.1.1 已发布并验证（当前线上 `c6e42a4`，2026-11-17 W10c）**：`pages` 分支提交 `c6e42a46e6176791260045d5054bc98e7b921f3e`（父 `e498eb3`），Pages build 状态 `built`；产物 462 HTML / 569 files，新增 `_astro/SearchPanel…` chunk；W10b 修复 149 页/607 处缺 Pages base 的内部链接，W10a 规范化 `sourceDigest=cfa59423…b333`，W3 本地资源 bridge 在普通浏览器中为惰性提示，45 张 legacy 图片经真实文件核验。发布记录见 [docs/releases/2026-11-17-v0.1.1-pages-w10.md](docs/releases/2026-11-17-v0.1.1-pages-w10.md)（历史记录 [e498eb3 provenance-only](docs/releases/2026-11-17-v0.1.1-pages.md)）
+- **GitHub Pages 0.1.1 已发布并验证（当前线上 `c6e42a4`，2026-11-17 W10c）**：`pages` 分支提交 `c6e42a46e6176791260045d5054bc98e7b921f3e`（父 `e498eb3`），Pages build 状态 `built`；产物 462 HTML / 569 files，新增 `_astro/SearchPanel…` chunk；W10b 修复 149 页/607 处缺 Pages base 的内部链接，W10a 规范化 `sourceDigest=cfa59423…b333`，W3 本地资源 bridge 在普通浏览器中为惰性提示，45 张 legacy 图片经真实文件核验。发布语义见 [docs/site-release-digest.md](docs/site-release-digest.md)
 - 站点按版本归档保存在 `site/`
 - 已有本地审计脚本（`scripts/audit-site.ps1`），会在开头检查 `ripgrep`（`rg`），缺失即显式失败；并检查：
   - `sitemap.xml` 可被 XML 解析，且 `<loc>` 数量等于 HTML 页面数（`404.html` 不计入）
@@ -48,9 +48,8 @@
 
 ## 推荐接手顺序
 
-1. 阅读最新发布记录 [docs/releases/2026-11-17-v0.1.1-pages-w10.md](docs/releases/2026-11-17-v0.1.1-pages-w10.md) 与摘要语义 [docs/site-release-digest.md](docs/site-release-digest.md)；Windows 本地操作前先阅读 [Windows 长路径说明](docs/windows-long-paths.md) 并配置 `core.longpaths=true`
+1. 阅读摘要语义 [docs/site-release-digest.md](docs/site-release-digest.md)；Windows 本地操作前先阅读 [Windows 长路径说明](docs/windows-long-paths.md) 并配置 `core.longpaths=true`
 2. 阅读 [README.md](README.md)
-3. 阅读 [docs/alicloud-oss-cdn-plan.md](docs/alicloud-oss-cdn-plan.md)
 4. 先运行发布脚本回归测试，确认本机环境正常：
    ```powershell
    powershell -ExecutionPolicy Bypass -File .\scripts\test-site-release.ps1
@@ -69,7 +68,7 @@
    powershell -ExecutionPolicy Bypass -File .\scripts\publish-oss.ps1 -Version v0.1.1 -Bucket oss://<bucket-name> -Endpoint <oss-endpoint> -BaseUrl https://<正式域名>
    ```
 9. 通过 `scripts/refresh-cdn.ps1` 刷新 `CDN`
-10. 做公网抽样验收，并在 `docs/releases/` 新增发布记录
+10. 做公网抽样验收
 
 ## 关键边界
 

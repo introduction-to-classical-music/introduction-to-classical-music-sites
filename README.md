@@ -4,7 +4,7 @@
 
 https://introduction-to-classical-music.github.io/introduction-to-classical-music-sites/
 
-2026-11-17：GitHub Pages 0.1.1 已完成两次更新，当前线上为 **W10c `c6e42a4`**（W10b 内部链接 base 修复 149 页/607 处、W10a 规范化 `sourceDigest`、W3 本地资源 bridge 惰性脚本、45 张 legacy 图核验）。发布记录见 [docs/releases/2026-11-17-v0.1.1-pages-w10.md](docs/releases/2026-11-17-v0.1.1-pages-w10.md)（此前 `e498eb3` 的 provenance-only 记录已作为历史保留）。
+2026-11-17：GitHub Pages 0.1.1 已完成两次更新，当前线上为 **W10c `c6e42a4`**（W10b 内部链接 base 修复 149 页/607 处、W10a 规范化 `sourceDigest`、W3 本地资源 bridge 惰性脚本、45 张 legacy 图核验）。摘要与发布语义见 [docs/site-release-digest.md](docs/site-release-digest.md)。
 
 这个仓库只负责两件事：
 
@@ -17,13 +17,10 @@ https://introduction-to-classical-music.github.io/introduction-to-classical-musi
 
 - [START_HERE.md](START_HERE.md)
   面向新的维护者或合作开发者
-- [docs/alicloud-oss-cdn-plan.md](docs/alicloud-oss-cdn-plan.md)
   阿里云 `OSS + CDN` 主方案
 - [docs/release-workflow.md](docs/release-workflow.md)
   站点更新、审计、上传与回滚流程
-- [docs/releases/2026-11-17-v0.1.1-pages-w10.md](docs/releases/2026-11-17-v0.1.1-pages-w10.md)
   最新一次 Pages 发布记录（`c6e42a4`：链接/digest/legacy 图/验证/回滚）
-- [docs/releases/2026-11-17-v0.1.1-pages.md](docs/releases/2026-11-17-v0.1.1-pages.md)
   历史发布记录（`e498eb3`，provenance-only，已被取代）
 - [docs/site-release-digest.md](docs/site-release-digest.md)
   `sourceDigest`/`siteDigest` 语义、EOL 规范化与复算方法
@@ -38,7 +35,6 @@ https://introduction-to-classical-music.github.io/introduction-to-classical-musi
   - 线上地址：https://introduction-to-classical-music.github.io/introduction-to-classical-music-sites/
   - 关键变化：W10b 修复 149 页/607 处缺 Pages base 的内部链接（线上抽样 200）；W10a `sourceDigest=cfa59423…b333`（CRLF/LF 可复算，取代旧 `7e1a…`）；W3 本地资源 bridge 在普通浏览器中**惰性提示**、不访问本地资源。
   - provenance 文件（公开可访问）：`/introduction-to-classical-music-sites/site-release-manifest.json`（`siteDigest=7a633492…eb68`，manifest SHA256 `1AB7D3D4…E0C`）、`/introduction-to-classical-music-sites/.icm-build-meta.json`
-  - 发布记录：[docs/releases/2026-11-17-v0.1.1-pages-w10.md](docs/releases/2026-11-17-v0.1.1-pages-w10.md)
 - **根站点（`site/v0.1.1`、`site/current`）仍在 D6-B 前，处于历史/未发布状态**：未生成、未替换，`site/` 归档仍是旧产物；OSS/CDN 未执行。
   - **`site/current` 不是当前可发布内容**：其中 `robots.txt` 仍指向占位域名 `example.com`，`sitemap.xml` 正文仍含历史损坏标记 `System.Object[]`，且没有 `site-release-manifest.json`。**不得把它当发布源、不得手工修补/伪造**；D6-B 正式域名后必须按 `export-site-release` → `audit-site` → 带 `site-release-manifest.json` 的流程重建（详见 [docs/release-workflow.md](docs/release-workflow.md#sitecurrent-与根站点归档状态d6-b-前)）。
   - `site/v0.1.1` 尚未归档（当前只有历史 `site/v0.1.0`）。
@@ -66,7 +62,7 @@ https://introduction-to-classical-music.github.io/introduction-to-classical-musi
 - `site/v0.1.0`
   按版本归档的站点副本
 - `docs/`
-  互联网部署说明、阿里云方案、回滚说明、[发布记录](docs/releases/)、[摘要语义文档](docs/site-release-digest.md)，以及 [Windows 长路径说明](docs/windows-long-paths.md)
+  发布/回滚说明、[摘要语义文档](docs/site-release-digest.md)，以及 [Windows 长路径说明](docs/windows-long-paths.md)
 - `scripts/`
   站点同步、上线前审计、静态元文件生成、`OSS` 上传、`CDN` 刷新脚本，以及发布脚本回归测试
 - `.github/`
@@ -157,7 +153,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\test-site-release.ps1
 
 详细说明见：
 
-- [docs/alicloud-oss-cdn-plan.md](docs/alicloud-oss-cdn-plan.md)
 - [docs/release-workflow.md](docs/release-workflow.md)
 
 ## 说明
